@@ -1,7 +1,6 @@
 package com.lq.himalaya.fragments;
 
 import android.graphics.Rect;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,32 +10,25 @@ import android.view.ViewGroup;
 import com.lq.himalaya.R;
 import com.lq.himalaya.adapters.RecommendListAdapter;
 import com.lq.himalaya.base.BaseFragment;
-import com.lq.himalaya.utils.Constants;
-import com.lq.himalaya.utils.LogUtil;
-import com.ximalaya.ting.android.opensdk.constants.DTransferConstants;
-import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
-import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack;
+import com.lq.himalaya.interfaces.IRecommendViewCallBack;
+import com.lq.himalaya.presents.RecommendPresenter;
 import com.ximalaya.ting.android.opensdk.model.album.Album;
-import com.ximalaya.ting.android.opensdk.model.album.GussLikeAlbumList;
 
 import net.lucode.hackware.magicindicator.buildins.UIUtil;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
- *
- *
  * Created by lqhunter on 2018/12/26.
  */
 
-public class RecommendFragment extends BaseFragment {
+public class RecommendFragment extends BaseFragment implements IRecommendViewCallBack {
 
     private static final String TAG = "RecommendFragment";
     private View mRootView;
     private RecyclerView mRecommendRv;
     private RecommendListAdapter recommendListAdapter;
+    private RecommendPresenter mRecommendPresenter;
 
     @Override
     protected View onSubViewLoaded(LayoutInflater layoutInflater, ViewGroup container) {
@@ -63,42 +55,42 @@ public class RecommendFragment extends BaseFragment {
         });
 
 
-        //获取数据
-        getRecommendData();
+        //获取逻辑层对象
+        mRecommendPresenter = RecommendPresenter.getInstance();
+        //设置通知接口的注册
+        mRecommendPresenter.registerViewCall(this);
+
+        mRecommendPresenter.getRecommendData();
 
 
         //返回 view, 给界面显示
         return mRootView;
     }
 
-    /**
-     * 获取推荐内容
-     * 接口：3.10.6 获取猜你喜欢专辑
-     */
-    private void getRecommendData() {
-        Map<String, String> map = new HashMap<>();
-        map.put(DTransferConstants.LIKE_COUNT, Constants.RECOMMEND_COUNT + "");
-        CommonRequest.getGuessLikeAlbum(map, new IDataCallBack<GussLikeAlbumList>() {
-            @Override
-            public void onSuccess(@Nullable GussLikeAlbumList gussLikeAlbumList) {
-                if (gussLikeAlbumList != null) {
-                    List<Album> albumList = gussLikeAlbumList.getAlbumList();
-                    //数据回来更新UI
-                    upRecommendUI(albumList);
 
-                }
-            }
+    @Override
+    public void onRecommendListLoad(List<Album> result) {
+        //数据回来后更新ui
+        recommendListAdapter.setData(result);
 
-            @Override
-            public void onError(int i, String s) {
-                LogUtil.d(TAG, "error ----> " + i);
-                LogUtil.d(TAG, "errorMsg ----> " + s);
-
-            }
-        });
     }
 
-    private void upRecommendUI(List<Album> albumList) {
-        recommendListAdapter.setData(albumList);
+    @Override
+    public void onLoadMore(List<Album> result) {
+
+    }
+
+    @Override
+    public void onRefreshMore(List<Album> result) {
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mRecommendPresenter != null) {
+
+            mRecommendPresenter.unRegisterCallBack(this);
+        }
     }
 }
