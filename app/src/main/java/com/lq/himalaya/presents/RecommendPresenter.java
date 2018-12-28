@@ -33,9 +33,9 @@ public class RecommendPresenter implements IRecommendPresenter {
 
     //单例
     public static RecommendPresenter getInstance() {
-        if (sInstance != null) {
+        if (sInstance == null) {
             synchronized (RecommendPresenter.class) {
-                if (sInstance != null) {
+                if (sInstance == null) {
                     sInstance = new RecommendPresenter();
                 }
             }
