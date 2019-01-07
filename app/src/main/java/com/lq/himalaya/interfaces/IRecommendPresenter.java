@@ -13,15 +13,6 @@ public interface IRecommendPresenter {
      */
     void getRecommendData();
 
-    /**
-     * 下拉刷新
-     */
-    void pullRefreshMore();
-
-    /**
-     * 上拉加载
-     */
-    void loadMore();
 
     /**
      * 注册ui的回调

@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import com.lq.himalaya.interfaces.IRecommendPresenter;
 import com.lq.himalaya.interfaces.IRecommendViewCallBack;
 import com.lq.himalaya.utils.Constants;
-import com.lq.himalaya.utils.LogUtil;
 import com.ximalaya.ting.android.opensdk.constants.DTransferConstants;
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
 import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack;
@@ -50,6 +49,8 @@ public class RecommendPresenter implements IRecommendPresenter {
      */
     @Override
     public void getRecommendData() {
+        //显示正在加载界面
+        updataLoading();
         //获取推荐内容
         Map<String, String> map = new HashMap<>();
         map.put(DTransferConstants.LIKE_COUNT, Constants.RECOMMEND_COUNT + "");
@@ -67,29 +68,42 @@ public class RecommendPresenter implements IRecommendPresenter {
 
             @Override
             public void onError(int i, String s) {
-                LogUtil.d(TAG, "error ----> " + i);
-                LogUtil.d(TAG, "errorMsg ----> " + s);
+                //处理错误
+                handlerError();
 
             }
         });
     }
 
-    private void handlerRecommendResult(List<Album> albumList) {
+    private void handlerError() {
         if (callbacks != null) {
             for (IRecommendViewCallBack callback : callbacks) {
-                callback.onRecommendListLoad(albumList);
+                callback.onNetworkError();
             }
         }
     }
 
-    @Override
-    public void pullRefreshMore() {
+    private void handlerRecommendResult(List<Album> albumList) {
+        //通知UI更新
+        if (albumList != null) {
+            //数据为空, 更新为 空 的ui
+            if (albumList.size() == 0) {
+                for (IRecommendViewCallBack callback : callbacks) {
+                    callback.onEmpty();
+                }
+            } else {    //数据不为空, 正常显示
+                for (IRecommendViewCallBack callback : callbacks) {
+                    callback.onRecommendListLoad(albumList);
+                }
+            }
+        }
 
     }
 
-    @Override
-    public void loadMore() {
-
+    private void updataLoading() {
+        for (IRecommendViewCallBack callback : callbacks) {
+            callback.onLoading();
+        }
     }
 
     @Override
@@ -102,7 +116,7 @@ public class RecommendPresenter implements IRecommendPresenter {
     @Override
     public void unRegisterCallBack(IRecommendViewCallBack callBack) {
         if (callbacks != null) {
-        callbacks.remove(callBack);
+            callbacks.remove(callBack);
         }
     }
 }

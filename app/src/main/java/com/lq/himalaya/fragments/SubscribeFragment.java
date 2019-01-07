@@ -13,9 +13,13 @@ import com.lq.himalaya.base.BaseFragment;
  */
 
 public class SubscribeFragment extends BaseFragment {
+
+
     @Override
     protected View onSubViewLoaded(LayoutInflater layoutInflater, ViewGroup container) {
-        View rootView = layoutInflater.inflate(R.layout.fragment_subscribe, container, false);
+        View rootView = layoutInflater.inflate(R.layout.frament_history, container, false);
+
+
         return rootView;
     }
 }

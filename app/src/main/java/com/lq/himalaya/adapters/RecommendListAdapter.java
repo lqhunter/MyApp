@@ -63,6 +63,13 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
             super(itemView);
         }
 
+        /**
+         * 每一个view 都设置数据
+         *
+         * 找到每一个 recommend_item 里的控件
+         * 设置数据
+         * @param album
+         */
         public void setData(Album album) {
             //找到各个控件，设置数据
             //专辑封面

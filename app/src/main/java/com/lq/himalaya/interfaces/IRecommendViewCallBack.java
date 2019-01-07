@@ -5,6 +5,7 @@ import com.ximalaya.ting.android.opensdk.model.album.Album;
 import java.util.List;
 
 /**
+ *
  * Created by lqhunter on 2018/12/28.
  */
 
@@ -15,13 +16,20 @@ public interface IRecommendViewCallBack {
      */
     void onRecommendListLoad(List<Album> result);
 
-    /**
-     * 加载更多
-     */
-    void onLoadMore(List<Album> result);
 
     /**
-     * 上拉刷新
+     * 网络错误
      */
-    void onRefreshMore(List<Album> result);
+    void onNetworkError();
+
+    /**
+     * 数据为空
+     */
+    void onEmpty();
+
+    /**
+     * 加载中
+     */
+    void onLoading();
+
 }
