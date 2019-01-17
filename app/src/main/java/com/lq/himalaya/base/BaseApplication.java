@@ -8,6 +8,7 @@ import com.ximalaya.ting.android.opensdk.constants.DTransferConstants;
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
 
 /**
+ *
  * Created by lqhunter on 2018/12/25.
  */
 
