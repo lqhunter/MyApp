@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.lq.himalaya.utils.FragmentCreater;
+import com.lq.himalaya.utils.FragmentCreator;
 
 /**
  * Created by lqhunter on 2018/12/26.
@@ -17,11 +17,11 @@ public class MainContentAdapter extends FragmentPagerAdapter{
 
     @Override
     public Fragment getItem(int position) {
-        return FragmentCreater.getFragment(position);
+        return FragmentCreator.getFragment(position);
     }
 
     @Override
     public int getCount() {
-        return FragmentCreater.PAGE_COUNT;
+        return FragmentCreator.PAGE_COUNT;
     }
 }

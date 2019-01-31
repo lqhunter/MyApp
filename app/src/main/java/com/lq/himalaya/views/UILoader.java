@@ -23,6 +23,7 @@ public abstract class UILoader extends FrameLayout {
     private View successView;
     private View errorView;
     private View emptyView;
+    private OnRetryClickListener onRetryClickListener = null;
 
     public enum UIStatus {
         LOADING, SUCCESS, NETWORK_ERROR, EMPTY, NONE
@@ -44,7 +45,7 @@ public abstract class UILoader extends FrameLayout {
 
     }
 
-    public void updateUIStatus(UIStatus uiStatus){
+    public void updateUIStatus(UIStatus uiStatus) {
         mCurrentStatus = uiStatus;
         //更新ui需要在主线程
         BaseApplication.getsHandler().post(new Runnable() {
@@ -99,8 +100,17 @@ public abstract class UILoader extends FrameLayout {
     }
 
     private View getNetWorkErrorView() {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_error_view, this, false);
-        return view;
+        View netWorkErrorView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_error_view, this, false);
+        netWorkErrorView.findViewById(R.id.network_error_icon).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //网络错误, 重新获取数据
+                if (onRetryClickListener != null) {
+                    onRetryClickListener.onRetryClick();
+                }
+            }
+        });
+        return netWorkErrorView;
     }
 
 
@@ -108,9 +118,20 @@ public abstract class UILoader extends FrameLayout {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_loading_view, this, false);
         return view;
     }
+
     /**
      * 成功界面不确定, 由外部实现, 定义为抽象方法
+     *
      * @return
      */
     protected abstract View getSuccessView(ViewGroup container);
+
+
+    public void setOnRetryClickListener(OnRetryClickListener onRetryClickListener) {
+        this.onRetryClickListener = onRetryClickListener;
+    }
+
+    public interface OnRetryClickListener {
+        void onRetryClick();
+    }
 }

@@ -12,7 +12,7 @@ import java.util.Map;
  * Created by lqhunter on 2018/12/26.
  */
 
-public class FragmentCreater {
+public class FragmentCreator {
 
 
     private final static int INDEX_RECOMMEND = 0;

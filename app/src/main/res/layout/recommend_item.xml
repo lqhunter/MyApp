@@ -4,7 +4,7 @@
     android:background="@drawable/shape_album_item_bg"
     android:layout_height="75dp">
 
-    <com.sunofbeaches.himalaya.views.RoundRectImageView
+    <com.lq.himalaya.views.RoundRectImageView
         android:scaleType="fitXY"
         android:id="@+id/album_cover"
         android:layout_width="68dp"

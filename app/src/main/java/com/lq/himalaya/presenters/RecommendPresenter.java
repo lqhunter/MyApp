@@ -1,10 +1,11 @@
-package com.lq.himalaya.presents;
+package com.lq.himalaya.presenters;
 
 import android.support.annotation.Nullable;
 
 import com.lq.himalaya.interfaces.IRecommendPresenter;
 import com.lq.himalaya.interfaces.IRecommendViewCallBack;
 import com.lq.himalaya.utils.Constants;
+import com.lq.himalaya.utils.LogUtil;
 import com.ximalaya.ting.android.opensdk.constants.DTransferConstants;
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
 import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack;
@@ -61,6 +62,7 @@ public class RecommendPresenter implements IRecommendPresenter {
                     List<Album> albumList = gussLikeAlbumList.getAlbumList();
                     //数据回来更新UI
                     //upRecommendUI(albumList);
+                    LogUtil.d(TAG, Thread.currentThread().getName());
                     handlerRecommendResult(albumList);
 
                 }
@@ -84,6 +86,7 @@ public class RecommendPresenter implements IRecommendPresenter {
     }
 
     private void handlerRecommendResult(List<Album> albumList) {
+        LogUtil.d(TAG, Thread.currentThread().getName());
         //通知UI更新
         if (albumList != null) {
             //数据为空, 更新为 空 的ui
@@ -108,7 +111,7 @@ public class RecommendPresenter implements IRecommendPresenter {
 
     @Override
     public void registerViewCall(IRecommendViewCallBack callBack) {
-        if (!callbacks.contains(callBack) && callbacks != null) {
+        if (callbacks != null && !callbacks.contains(callBack)) {
             callbacks.add(callBack);
         }
     }

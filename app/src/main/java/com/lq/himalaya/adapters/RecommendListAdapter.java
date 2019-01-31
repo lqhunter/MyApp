@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lq.himalaya.R;
+import com.lq.himalaya.utils.LogUtil;
 import com.squareup.picasso.Picasso;
 import com.ximalaya.ting.android.opensdk.model.album.Album;
 
@@ -16,13 +17,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * Created by lqhunter on 2018/12/27.
  */
 
-public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdapter.InnerHolder>{
+public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdapter.InnerHolder> {
 
+    private static final String TAG = "RecommendListAdapter";
     private List<Album> mData = new ArrayList<>();
+    private OnRecommendItemClickListener mRecommendItemClickListener = null;
 
     @NonNull
     @Override
@@ -37,6 +39,17 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
     public void onBindViewHolder(@NonNull InnerHolder holder, int position) {
         //通过 holder 把数据和 view 绑定
         holder.itemView.setTag(position);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LogUtil.d(TAG, "點擊了 ======>" + v.getTag());
+                if (mRecommendItemClickListener != null) {
+                    int clickPosition = (int) v.getTag();
+                    mRecommendItemClickListener.onItemClick(clickPosition, mData.get(clickPosition));
+                }
+
+            }
+        });
         holder.setData(mData.get(position));
 
     }
@@ -65,9 +78,10 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
 
         /**
          * 每一个view 都设置数据
-         *
+         * <p>
          * 找到每一个 recommend_item 里的控件
          * 设置数据
+         *
          * @param album
          */
         public void setData(Album album) {
@@ -92,5 +106,13 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
                     .load(album.getCoverUrlLarge())
                     .into(albumCoverTv);
         }
+    }
+
+    public void setOnRecommendItemClickListener(OnRecommendItemClickListener listener) {
+        this.mRecommendItemClickListener = listener;
+    }
+
+    public interface OnRecommendItemClickListener {
+        void onItemClick(int position, Album album);
     }
 }

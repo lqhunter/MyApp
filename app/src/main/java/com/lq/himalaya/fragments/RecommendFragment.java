@@ -1,5 +1,6 @@
 package com.lq.himalaya.fragments;
 
+import android.content.Intent;
 import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -7,12 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.lq.himalaya.DetailActivity;
 import com.lq.himalaya.R;
 import com.lq.himalaya.adapters.RecommendListAdapter;
 import com.lq.himalaya.base.BaseFragment;
 import com.lq.himalaya.interfaces.IRecommendPresenter;
 import com.lq.himalaya.interfaces.IRecommendViewCallBack;
-import com.lq.himalaya.presents.RecommendPresenter;
+import com.lq.himalaya.presenters.DetailPresenter;
+import com.lq.himalaya.presenters.RecommendPresenter;
+import com.lq.himalaya.utils.LogUtil;
 import com.lq.himalaya.views.UILoader;
 import com.ximalaya.ting.android.opensdk.model.album.Album;
 
@@ -25,7 +29,7 @@ import java.util.List;
  * Created by lqhunter on 2018/12/26.
  */
 
-public class RecommendFragment extends BaseFragment implements IRecommendViewCallBack {
+public class RecommendFragment extends BaseFragment implements IRecommendViewCallBack, UILoader.OnRetryClickListener, RecommendListAdapter.OnRecommendItemClickListener {
 
     private static final String TAG = "RecommendFragment";
     private View mRootView;
@@ -87,12 +91,14 @@ public class RecommendFragment extends BaseFragment implements IRecommendViewCal
             }
         });
 
+        recommendListAdapter.setOnRecommendItemClickListener(this);
         return mRootView;
     }
 
 
     @Override
     public void onRecommendListLoad(List<Album> result) {
+        LogUtil.d(TAG, Thread.currentThread().getName());
         //数据回来后更新ui
         recommendListAdapter.setData(result);
         mUILoader.updateUIStatus(UILoader.UIStatus.SUCCESS);
@@ -101,6 +107,7 @@ public class RecommendFragment extends BaseFragment implements IRecommendViewCal
     @Override
     public void onNetworkError() {
         mUILoader.updateUIStatus(UILoader.UIStatus.NETWORK_ERROR);
+        mUILoader.setOnRetryClickListener(this);
 
     }
 
@@ -123,5 +130,22 @@ public class RecommendFragment extends BaseFragment implements IRecommendViewCal
             //取消注册
             mRecommendPresenter.unRegisterCallBack(this);
         }
+    }
+
+    @Override
+    public void onRetryClick() {
+        //网络不佳，点击重试
+        if (mRecommendPresenter != null) {
+            mRecommendPresenter.getRecommendData();
+        }
+    }
+
+    @Override
+    public void onItemClick(int position, Album album) {
+        //根据位置拿到数据
+        DetailPresenter.getDetailPresenter().setTargetAlbum(album);
+        //跳转界面
+        Intent intent = new Intent(getContext(), DetailActivity.class);
+        startActivity(intent);
     }
 }
