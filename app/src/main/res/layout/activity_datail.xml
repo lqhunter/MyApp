@@ -10,7 +10,7 @@
         android:layout_height="150dp"
         android:scaleType="fitXY" />
 
-    <com.lq.himalaya.views.RoundRectImageView
+    <com.lq.myapp.views.RoundRectImageView
         android:scaleType="fitXY"
         android:id="@+id/iv_small_cover"
         android:layout_width="75dp"

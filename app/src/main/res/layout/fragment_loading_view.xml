@@ -10,7 +10,7 @@
         android:orientation="vertical"
         android:layout_height="wrap_content">
 
-        <com.lq.himalaya.views.LoadingView
+        <com.lq.myapp.views.LoadingView
             android:src="@mipmap/loading"
             android:layout_width="48dp"
             android:layout_height="48dp" />
