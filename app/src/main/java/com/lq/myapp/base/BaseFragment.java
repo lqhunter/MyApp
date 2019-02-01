@@ -24,6 +24,19 @@ public abstract class BaseFragment extends Fragment {
         return mRootView;
     }
 
+    // activity创建结束,在该方法内可以进行与Activity交互的UI操作
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initData();
+    }
+
+    /**
+     * 初始化数据, 子类可以不实现
+     */
+    public void initData() {
+
+    }
 
 
     protected abstract View onSubViewLoaded(LayoutInflater layoutInflater, ViewGroup container);

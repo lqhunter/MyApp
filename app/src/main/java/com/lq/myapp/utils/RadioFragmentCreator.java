@@ -12,12 +12,12 @@ import java.util.Map;
  * Created by lqhunter on 2018/12/26.
  */
 
-public class FragmentCreator {
+public class RadioFragmentCreator {
 
 
-    private final static int INDEX_RECOMMEND = 0;
-    private final static int INDEX_SUBSCRIBE = 1;
-    private final static int INDEX_HISTORY = 2;
+    private final static int RADIO_INDEX_RECOMMEND = 0;
+    private final static int RADIO_INDEX_SUBSCRIBE = 1;
+    private final static int RADIO_INDEX_HISTORY = 2;
 
     public final static int PAGE_COUNT = 3;
 
@@ -30,13 +30,13 @@ public class FragmentCreator {
         }
 
         switch (index) {
-            case INDEX_RECOMMEND:
+            case RADIO_INDEX_RECOMMEND:
                 indexFragment = new RecommendFragment();
                 break;
-            case INDEX_SUBSCRIBE:
+            case RADIO_INDEX_SUBSCRIBE:
                 indexFragment = new SubscribeFragment();
                 break;
-            case INDEX_HISTORY:
+            case RADIO_INDEX_HISTORY:
                 indexFragment = new HistoryFragment();
                 break;
         }

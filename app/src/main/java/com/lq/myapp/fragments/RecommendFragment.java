@@ -8,13 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.lq.myapp.DetailActivity;
+import com.lq.myapp.RadioDetailActivity;
 import com.lq.myapp.R;
 import com.lq.myapp.adapters.RecommendListAdapter;
 import com.lq.myapp.base.BaseFragment;
 import com.lq.myapp.interfaces.IRecommendPresenter;
 import com.lq.myapp.interfaces.IRecommendViewCallBack;
-import com.lq.myapp.presenters.DetailPresenter;
+import com.lq.myapp.presenters.RadioDetailPresenter;
 import com.lq.myapp.presenters.RecommendPresenter;
 import com.lq.myapp.utils.LogUtil;
 import com.lq.myapp.views.UILoader;
@@ -143,9 +143,9 @@ public class RecommendFragment extends BaseFragment implements IRecommendViewCal
     @Override
     public void onItemClick(int position, Album album) {
         //根据位置拿到数据
-        DetailPresenter.getDetailPresenter().setTargetAlbum(album);
+        RadioDetailPresenter.getDetailPresenter().setTargetAlbum(album);
         //跳转界面
-        Intent intent = new Intent(getContext(), DetailActivity.class);
+        Intent intent = new Intent(getContext(), RadioDetailActivity.class);
         startActivity(intent);
     }
 }

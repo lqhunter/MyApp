@@ -7,23 +7,23 @@ import com.ximalaya.ting.android.opensdk.model.album.Album;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetailPresenter implements IDetailPresenter {
+public class RadioDetailPresenter implements IDetailPresenter {
 
     private List<IDetailViewCallback> mCallbacks = new ArrayList<>();
 
     private Album mAlbum = null;
 
-    private DetailPresenter() {
+    private RadioDetailPresenter() {
 
     }
 
-    private static DetailPresenter sInstance = null;
+    private static RadioDetailPresenter sInstance = null;
 
-    public static DetailPresenter getDetailPresenter() {
+    public static RadioDetailPresenter getDetailPresenter() {
         if (sInstance == null) {
-            synchronized (DetailPresenter.class) {
+            synchronized (RadioDetailPresenter.class) {
                 if (sInstance == null) {
-                    sInstance = new DetailPresenter();
+                    sInstance = new RadioDetailPresenter();
                 }
             }
         }
