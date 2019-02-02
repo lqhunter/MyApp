@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
 import com.lq.myapp.R;
 import com.lq.myapp.bean.VideoBean;
 import com.lq.myapp.utils.LogUtil;
@@ -57,11 +58,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.InnerH
 
     public void setData(List<VideoBean> albumList) {
         if (albumList != null) {
-            data.clear();
-            data.addAll(albumList);
+            //this.data.clear();
+            this.data.addAll(albumList);
         }
-/*        //更新UI
-        notifyDataSetChanged();*/
     }
 
 

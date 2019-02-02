@@ -20,20 +20,26 @@ import okhttp3.Response;
 
 public class SciencePresenter {
 
+    private static boolean hasMore = true;
+    private int page = 2;
     List<VideoBean> data = new ArrayList<>();
     private static final String TAG = "SciencePresenter";
     String scienceUrl = "https://91mjw.com/category/all_mj/kehuanpian";
+    String scienceUrl2 = "https://91mjw.com/category/all_mj/kehuanpian/page/2";
     private OnGetURLDataSuccessCallBack mOnGetURLDataSuccessCallBack = null;
 
     public SciencePresenter() {
-
+        getData(scienceUrl, "0");
     }
 
-    public void getData() {
+    private void getData(String url, String page) {
+        String s = url + "/page/" + page;
+        LogUtil.d(TAG, "获取 " + s);
+
         //1.创建OkHttpClient对象
         OkHttpClient okHttpClient = new OkHttpClient();
         //2.创建Request对象，设置一个url地址（百度地址）,设置请求方式。
-        Request request = new Request.Builder().url(scienceUrl).method("GET",null).build();
+        Request request = new Request.Builder().url(url + "/page/" + page).method("GET",null).build();
         //3.创建一个call对象,参数就是Request请求对象
         Call call = okHttpClient.newCall(request);
         //4.请求加入调度，重写回调方法
@@ -41,6 +47,8 @@ public class SciencePresenter {
             @Override
             public void onFailure(Call call, IOException e) {
                 LogUtil.e(TAG, "获取 " + scienceUrl + " 失败");
+                //获取失败，没有更多
+                hasMore = false;
             }
 
             @Override
@@ -48,6 +56,7 @@ public class SciencePresenter {
                 LogUtil.e(TAG, "获取 " + scienceUrl + "_html 成功");
                 LogUtil.d(TAG, Thread.currentThread().getName());
                 parseHtml(response.body().string());
+
             }
         });
     }
@@ -55,8 +64,11 @@ public class SciencePresenter {
     private void parseHtml(String html) {
         Document document = Jsoup.parse(html);
         Elements All = document.select("div[class=m-movies clearfix]").select("article[class=u-movie]");
+        if (All.size() < 42) {  //当前页面小于42个，表面以后就没有了
+            hasMore = false;
+        }
 
-
+        data.clear();
         for(Element one : All) {
             VideoBean temp = new VideoBean();
 
@@ -82,9 +94,7 @@ public class SciencePresenter {
             data.add(temp);
         }
 
-
         mOnGetURLDataSuccessCallBack.onSuccess(data);
-
 
     }
 
@@ -95,6 +105,16 @@ public class SciencePresenter {
 
     public interface OnGetURLDataSuccessCallBack {
         void onSuccess(List<VideoBean> data);
+
+        void noMore();
+    }
+
+    public void loadMore() {
+        if (hasMore) {
+            getData(scienceUrl, page + "");
+            page++;
+        } else
+            mOnGetURLDataSuccessCallBack.noMore();
     }
 
 
