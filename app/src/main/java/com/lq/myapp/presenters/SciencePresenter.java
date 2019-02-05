@@ -1,6 +1,7 @@
 package com.lq.myapp.presenters;
 
 import com.lq.myapp.bean.VideoBean;
+import com.lq.myapp.interfaces.IVideoViewCallBack;
 import com.lq.myapp.utils.LogUtil;
 
 import org.jsoup.Jsoup;
@@ -29,11 +30,11 @@ public class SciencePresenter {
     private static final String TAG = "SciencePresenter";
     String scienceUrl = "https://91mjw.com/category/all_mj/kehuanpian";
     String scienceUrl2 = "https://91mjw.com/category/all_mj/kehuanpian/page/2";
-    private OnGetURLDataSuccessCallBack mOnGetURLDataSuccessCallBack = null;
+    private IVideoViewCallBack mVideoViewCallBack = null;
     private static SciencePresenter sInstance = null;
 
     private SciencePresenter() {
-        loadData(scienceUrl, "0");
+
     }
 
     //单例
@@ -54,7 +55,12 @@ public class SciencePresenter {
         return mAllData.get(position);
     }
 
-    private void loadData(String url, String page) {
+    public void loadData() {
+        mVideoViewCallBack.onLoading();
+        loadDataByUrl(scienceUrl, "0");
+    }
+
+    private void loadDataByUrl(String url, String page) {
         String s = url + "/page/" + page;
         LogUtil.d(TAG, "获取 " + s);
 
@@ -69,8 +75,7 @@ public class SciencePresenter {
             @Override
             public void onFailure(Call call, IOException e) {
                 LogUtil.e(TAG, "获取 " + scienceUrl + " 失败");
-                //获取失败，没有更多
-                hasMore = false;
+                mVideoViewCallBack.onNetworkError();
             }
 
             @Override
@@ -118,27 +123,23 @@ public class SciencePresenter {
 
         mAllData.addAll(data);
 
-        mOnGetURLDataSuccessCallBack.onSuccess(data);
+        mVideoViewCallBack.onSuccess(data);
 
     }
 
-    public void setOnGetURLDataSuccessCallBack(OnGetURLDataSuccessCallBack callBack) {
-        this.mOnGetURLDataSuccessCallBack = callBack;
+    public void setVideoViewCallBack(IVideoViewCallBack callBack) {
+        this.mVideoViewCallBack = callBack;
     }
 
 
-    public interface OnGetURLDataSuccessCallBack {
-        void onSuccess(List<VideoBean> data);
 
-        void noMore();
-    }
 
     public void loadMore() {
         if (hasMore) {
-            loadData(scienceUrl, page + "");
+            loadDataByUrl(scienceUrl, page + "");
             page++;
         } else
-            mOnGetURLDataSuccessCallBack.noMore();
+            mVideoViewCallBack.noMore();
     }
 
 

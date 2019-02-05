@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,9 +45,11 @@ public class RecommendFragment extends BaseFragment implements IRecommendViewCal
         mUILoader = new UILoader(getContext()) {
             @Override
             protected View getSuccessView(ViewGroup container) {
-                return createSuccessView(layoutInflater, container);
+                Log.d(TAG, "container ----> " + container);
+                return createSuccessView(container);
             }
         };
+
 
         //获取逻辑层对象
         mRecommendPresenter = RecommendPresenter.getInstance();
@@ -55,6 +58,7 @@ public class RecommendFragment extends BaseFragment implements IRecommendViewCal
         mRecommendPresenter.getRecommendData();
 
         //不能重复绑定
+        Log.d(TAG, "mUiLoader.getParent() ----> " + mUILoader.getParent());
         if (mUILoader.getParent() instanceof ViewGroup) {
             ((ViewGroup) mUILoader.getParent()).removeView(mUILoader);
         }
@@ -63,9 +67,9 @@ public class RecommendFragment extends BaseFragment implements IRecommendViewCal
         return mUILoader;
     }
 
-    private View createSuccessView(LayoutInflater layoutInflater, ViewGroup container) {
+    private View createSuccessView(ViewGroup container) {
         //view 加载
-        mRootView = layoutInflater.inflate(R.layout.fragment_radio_recommend, container, false);
+        mRootView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_radio_recommend, container, false);
 
         //1.找到控件
         mRecommendRv = mRootView.findViewById(R.id.recommend_list);
