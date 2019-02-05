@@ -10,15 +10,37 @@
         android:layout_height="200dp">
     </cn.jzvd.JZVideoPlayerStandard>
 
+    <ImageView
+        android:scaleType="fitXY"
+        android:id="@+id/video_play_cover"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/video_name"
+            android:text="生活大爆炸"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="0dp" />
+
+        <TextView
+            android:id="@+id/video_count"
+            android:text="共6集"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
 
 
     </LinearLayout>
 
     <ListView
+        android:dividerHeight="5dp"
         android:id="@+id/count"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

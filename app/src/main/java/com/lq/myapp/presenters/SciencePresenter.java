@@ -22,17 +22,39 @@ public class SciencePresenter {
 
     private static boolean hasMore = true;
     private int page = 2;
+
+    List<VideoBean> mAllData = new ArrayList<>();
+
     List<VideoBean> data = new ArrayList<>();
     private static final String TAG = "SciencePresenter";
     String scienceUrl = "https://91mjw.com/category/all_mj/kehuanpian";
     String scienceUrl2 = "https://91mjw.com/category/all_mj/kehuanpian/page/2";
     private OnGetURLDataSuccessCallBack mOnGetURLDataSuccessCallBack = null;
+    private static SciencePresenter sInstance = null;
 
-    public SciencePresenter() {
-        getData(scienceUrl, "0");
+    private SciencePresenter() {
+        loadData(scienceUrl, "0");
     }
 
-    private void getData(String url, String page) {
+    //单例
+    public static SciencePresenter getInstance() {
+        if (sInstance == null) {
+            synchronized (RecommendPresenter.class) {
+                if (sInstance == null) {
+                    sInstance = new SciencePresenter();
+                }
+            }
+        }
+
+        return sInstance;
+    }
+
+
+    public VideoBean getData(int position) {
+        return mAllData.get(position);
+    }
+
+    private void loadData(String url, String page) {
         String s = url + "/page/" + page;
         LogUtil.d(TAG, "获取 " + s);
 
@@ -94,6 +116,8 @@ public class SciencePresenter {
             data.add(temp);
         }
 
+        mAllData.addAll(data);
+
         mOnGetURLDataSuccessCallBack.onSuccess(data);
 
     }
@@ -111,7 +135,7 @@ public class SciencePresenter {
 
     public void loadMore() {
         if (hasMore) {
-            getData(scienceUrl, page + "");
+            loadData(scienceUrl, page + "");
             page++;
         } else
             mOnGetURLDataSuccessCallBack.noMore();

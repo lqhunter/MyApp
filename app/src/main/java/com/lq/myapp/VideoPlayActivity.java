@@ -8,11 +8,16 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.lq.myapp.adapters.VideoDetailListAdapter;
+import com.lq.myapp.bean.VideoBean;
+import com.lq.myapp.presenters.SciencePresenter;
 import com.lq.myapp.presenters.VideoDetailPresenter;
 import com.lq.myapp.utils.LogUtil;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,14 +28,15 @@ import cn.jzvd.JZVideoPlayerStandard;
 public class VideoPlayActivity extends AppCompatActivity implements VideoDetailPresenter.OnGetVideoURLCallBack {
 
     private static final String TAG = "VideoPlayActivity";
-    private String detailURL;
-    private List<String> videoURL = new ArrayList<>();
-    //集数
-    private int count;
+    private VideoBean mVideo;
+
     private VideoDetailListAdapter mListAdapter = null;
     private ListView mListView = null;
     private VideoDetailPresenter mDetailPresenter;
     private JZVideoPlayerStandard mJzvdStd;
+    private ImageView mVideoPlayerCover;
+    private TextView mVideoName;
+    private TextView mVideoCount;
 
 
     @Override
@@ -40,26 +46,33 @@ public class VideoPlayActivity extends AppCompatActivity implements VideoDetailP
 
 
         Intent intent = getIntent();
-        detailURL = intent.getExtras().getString("detailURL");
+        mVideo = SciencePresenter.getInstance().getData(intent.getExtras().getInt("position"));
 
         initView();
 
-        mDetailPresenter = new VideoDetailPresenter(detailURL, this);
+        mDetailPresenter = new VideoDetailPresenter(mVideo.getDetailURL(), this);
         mDetailPresenter.setOnGetVideoURLCallBack(this);
 
 
 
-       // mJzvdStd.thumbImageView.setImage("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
 
 
     }
 
     private void initView() {
-
-
-
         mJzvdStd = findViewById(R.id.video_player);
-        mJzvdStd.thumbImageView.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.cover));
+        //mJzvdStd.thumbImageView.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.cover));
+        mJzvdStd.setVisibility(View.GONE);//初始化时不让其显示
+
+        //播放器封面
+        mVideoPlayerCover = findViewById(R.id.video_play_cover);
+        Picasso.with(this).load(mVideo.getCoverURL()).into(mVideoPlayerCover);
+
+        //设置标题
+        mVideoName = findViewById(R.id.video_name);
+        mVideoName.setText(mVideo.getTitle());
+        mVideoCount = findViewById(R.id.video_count);
+
 
         mListView = findViewById(R.id.count);
         mListAdapter = new VideoDetailListAdapter(this);
@@ -84,6 +97,8 @@ public class VideoPlayActivity extends AppCompatActivity implements VideoDetailP
                 @Override
                 public void run() {
                     mJzvdStd.setUp(videoURL, JZVideoPlayer.SCREEN_WINDOW_NORMAL, "第" + num + "集");
+                    mVideoPlayerCover.setVisibility(View.GONE);
+                    mJzvdStd.setVisibility(View.VISIBLE);
                     mJzvdStd.startVideo();
 
                 }
@@ -95,6 +110,8 @@ public class VideoPlayActivity extends AppCompatActivity implements VideoDetailP
     @Override
     public void onGetCount(int count) {
         mListAdapter.setCount(count);
+        //设置集数
+        mVideoCount.setText("共" + count + "集");
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

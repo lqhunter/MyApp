@@ -40,7 +40,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.InnerH
                 LogUtil.d(TAG, "點擊了 ======>" + v.getTag());
                 LogUtil.d(TAG, "position ======>" + position);
                 if (mRecommendItemClickListener != null) {
-                    mRecommendItemClickListener.onItemClick((Integer) v.getTag(), data.get(position).getDetailURL());
+                    mRecommendItemClickListener.onItemClick((Integer) v.getTag());
                 }
             }
         });
@@ -87,7 +87,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.InnerH
     }
 
     public interface OnRecommendItemClickListener {
-        void onItemClick(int position, String detailURL);
+        void onItemClick(int position);
     }
 
 

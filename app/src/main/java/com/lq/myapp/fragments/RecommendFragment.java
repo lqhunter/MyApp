@@ -48,16 +48,12 @@ public class RecommendFragment extends BaseFragment implements IRecommendViewCal
             }
         };
 
-
-
-
         //获取逻辑层对象
         mRecommendPresenter = RecommendPresenter.getInstance();
         //设置通知接口的注册
         mRecommendPresenter.registerViewCall(this);
         mRecommendPresenter.getRecommendData();
 
-        //解绑???, 没懂！！！
         //不能重复绑定
         if (mUILoader.getParent() instanceof ViewGroup) {
             ((ViewGroup) mUILoader.getParent()).removeView(mUILoader);

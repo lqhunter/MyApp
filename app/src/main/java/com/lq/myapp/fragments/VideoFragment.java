@@ -2,8 +2,11 @@ package com.lq.myapp.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -17,7 +20,6 @@ import com.lq.myapp.adapters.RecyclerAdapter;
 import com.lq.myapp.base.BaseFragment;
 import com.lq.myapp.bean.VideoBean;
 import com.lq.myapp.presenters.SciencePresenter;
-import com.lq.myapp.utils.LogUtil;
 
 import java.util.List;
 
@@ -29,14 +31,14 @@ public class VideoFragment extends BaseFragment implements SciencePresenter.OnGe
     private View mView;
     private String TAG = "VideoFragment";
     private SciencePresenter mSciencePresenter;
+    private android.support.v7.widget.Toolbar mToolbar;
 
 
     @Override
     public void initData() {
         //SciencePresenter 获取数据
-        mSciencePresenter = new SciencePresenter();
+        mSciencePresenter = SciencePresenter.getInstance();
         mSciencePresenter.setOnGetURLDataSuccessCallBack(this);
-
     }
 
 
@@ -44,11 +46,7 @@ public class VideoFragment extends BaseFragment implements SciencePresenter.OnGe
     protected View onSubViewLoaded(LayoutInflater layoutInflater, ViewGroup container) {
         //view 加载
         mView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_science, container, false);
-
-
         initView();
-
-
         return mView;
     }
 
@@ -78,6 +76,22 @@ public class VideoFragment extends BaseFragment implements SciencePresenter.OnGe
             }
         });
 
+        //initToolBar
+        mToolbar = mView.findViewById(R.id.tool_bar);
+        mToolbar.setTitle("科幻片");  //设置标题,放在setSupportActionBar后无效
+
+        setHasOptionsMenu(true);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
+
+
+
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.video_actionbar, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -85,6 +99,7 @@ public class VideoFragment extends BaseFragment implements SciencePresenter.OnGe
         Log.d(TAG, "onSuccess -->" + data.size());
 
         mRecyclerAdapter.setData(data);
+
         //此处为网络请求的线程中, ui更新需要主线程
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -111,11 +126,10 @@ public class VideoFragment extends BaseFragment implements SciencePresenter.OnGe
 
 
     @Override
-    public void onItemClick(int position, String detailURL) {
-        LogUtil.d(TAG, detailURL);
+    public void onItemClick(int position) {
         Intent intent = new Intent(getContext(), VideoPlayActivity.class);
         Bundle bundle = new Bundle();// 创建Bundle对象
-        bundle.putString("detailURL", detailURL);//  放入data值为int型
+        bundle.putInt("position", position);//  放入data值为int型
         intent.putExtras(bundle);
         startActivity(intent);
     }

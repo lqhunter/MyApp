@@ -1,8 +1,10 @@
 package com.lq.myapp;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
@@ -11,7 +13,7 @@ import com.lq.myapp.fragments.PicFragment;
 import com.lq.myapp.fragments.RadioFragment;
 import com.lq.myapp.fragments.VideoFragment;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private BottomTabBar mBottomTabBar;
@@ -23,8 +25,8 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
 
         initView();
-
     }
+
 
 
     private void initView() {
