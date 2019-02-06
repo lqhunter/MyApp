@@ -27,8 +27,6 @@ public class MainActivity extends AppCompatActivity {
         initView();
     }
 
-
-
     private void initView() {
 
         mBottomTabBar = findViewById(R.id.bottom_tab_bar);

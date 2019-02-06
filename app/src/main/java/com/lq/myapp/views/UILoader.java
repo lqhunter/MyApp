@@ -29,7 +29,7 @@ public abstract class UILoader extends FrameLayout {
         LOADING, SUCCESS, NETWORK_ERROR, EMPTY, NONE
     }
 
-    public UIStatus mCurrentStatus = UIStatus.NONE;
+    private UIStatus mCurrentStatus = UIStatus.NONE;
 
     public UILoader(@NonNull Context context) {
         this(context, null);
