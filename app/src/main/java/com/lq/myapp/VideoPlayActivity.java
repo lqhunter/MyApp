@@ -2,6 +2,7 @@ package com.lq.myapp;
 
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import android.support.annotation.Nullable;
@@ -47,7 +48,9 @@ public class VideoPlayActivity extends AppCompatActivity implements VideoDetailP
 
         Intent intent = getIntent();
         mVideo = SciencePresenter.getInstance().getData(intent.getExtras().getInt("position"));
-
+        //状态栏透明
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+        getWindow().setStatusBarColor(Color.TRANSPARENT);
         initView();
 
         mDetailPresenter = new VideoDetailPresenter(mVideo.getDetailURL(), this);

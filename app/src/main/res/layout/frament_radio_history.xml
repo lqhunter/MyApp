@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:text="历史界面"
+        android:text="订阅界面"
         android:textSize="30sp"
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"

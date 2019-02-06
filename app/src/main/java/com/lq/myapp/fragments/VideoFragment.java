@@ -32,7 +32,7 @@ public class VideoFragment extends BaseFragment implements IVideoViewCallBack
     private View mView;
     private String TAG = "VideoFragment";
     private SciencePresenter mSciencePresenter;
-    private android.support.v7.widget.Toolbar mToolbar;
+    //private android.support.v7.widget.Toolbar mToolbar;
     private UILoader mUILoader;
 
     @Override
@@ -92,12 +92,6 @@ public class VideoFragment extends BaseFragment implements IVideoViewCallBack
                 }
             }
         });
-
-        //initToolBar
-        mToolbar = mView.findViewById(R.id.tool_bar);
-        mToolbar.inflateMenu(R.menu.video_actionbar);
-        mToolbar.setTitle("科幻片");  //设置标题,放在setSupportActionBar后无效
-        setHasOptionsMenu(true);
 
         return mView;
 
