@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 
 import com.hjm.bottomtabbar.BottomTabBar;
@@ -32,12 +33,8 @@ public class MainActivity extends AppCompatActivity {
 
         //initToolBar
         mToolbar = findViewById(R.id.test_tool_bar);
-        mToolbar.inflateMenu(R.menu.toolbar_menu);
-        //默认图片界面
-        changeToolBarPic();
-        //SearchView searchView = (SearchView) mToolbar.getMenu().findItem(R.id.search).getActionView();
-        //设置提交按钮是否可见
-        //searchView.setSubmitButtonEnabled(true);
+        setSupportActionBar(mToolbar);
+
 
         BottomTabBar bottomTabBar = findViewById(R.id.bottom_tab_bar);
         bottomTabBar.init(getSupportFragmentManager())
@@ -71,7 +68,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        //初始化图片界面不显示搜索图标
+        mToolbar.getMenu().findItem(R.id.search).setVisible(false);
+        return true;
+    }
+
     private void changeToolBarPic() {
+        Log.d(TAG, "changeToolBarPic...");
+
         mToolbar.setTitle("图片");
         //图片界面关闭搜索
         mToolbar.getMenu().findItem(R.id.search).setVisible(false);

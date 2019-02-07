@@ -3,18 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+
+    <ImageView
+        android:id="@+id/network_error_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_centerInParent="true"
+        android:src="@mipmap/img_holder_error_style1" />
 
-        <ImageView
-            android:id="@+id/network_error_icon"
-            android:layout_width="wrap_content"
-            android:src="@mipmap/network_error_icon"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/network_error_icon"
+        android:layout_centerInParent="true"
+        android:text="似乎已断开与互联网的连接" />
 
 
 </RelativeLayout>

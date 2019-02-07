@@ -38,11 +38,11 @@ public class LoadingView extends ImageView {
         post(new Runnable() {
             @Override
             public void run() {
-                rotate_degree += 30;
+                rotate_degree += 10;
                 rotate_degree = rotate_degree <= 360 ? rotate_degree : 0;
                 invalidate();
                 if (mNeedRotate) {
-                    postDelayed(this, 100);
+                    postDelayed(this, 30);
                 }
             }
         });

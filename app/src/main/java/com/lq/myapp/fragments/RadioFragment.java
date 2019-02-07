@@ -54,7 +54,8 @@ public class RadioFragment extends BaseFragment {
         mViewPager.setAdapter(mainContentAdapter);
 
         magicIndicator = mRootView.findViewById(R.id.magic_indicator);
-        magicIndicator.setBackgroundColor(getResources().getColor(R.color.main_color));
+        magicIndicator.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+
         //创建 indicater 的适配器
         indicaterAdapter = new IndicaterAdapter(getContext());
         CommonNavigator commonNavigator = new CommonNavigator(getContext());

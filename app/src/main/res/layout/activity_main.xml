@@ -6,6 +6,7 @@
     android:background="#ede7e7">
 
 
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/test_tool_bar"
         android:layout_width="match_parent"

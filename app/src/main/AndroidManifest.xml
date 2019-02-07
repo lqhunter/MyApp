@@ -28,7 +28,7 @@
             android:name=".VideoPlayActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".VideoSearchActivity"></activity>
+        <activity android:name=".VideoSearchActivity" />
     </application>
 
 </manifest>

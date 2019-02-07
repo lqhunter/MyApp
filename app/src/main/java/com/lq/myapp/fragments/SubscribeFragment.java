@@ -17,7 +17,7 @@ public class SubscribeFragment extends BaseFragment {
 
     @Override
     protected View onSubViewLoaded(LayoutInflater layoutInflater, ViewGroup container) {
-        View rootView = layoutInflater.inflate(R.layout.frament_radio_history, container, false);
+        View rootView = layoutInflater.inflate(R.layout.fragment_radio_subscribe, container, false);
 
 
         return rootView;
