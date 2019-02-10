@@ -1,0 +1,47 @@
+package com.lq.myapp.utils;
+
+import com.lq.myapp.interfaces.IPicService;
+
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+/**
+ * 得到 IPicService接口 的实现类, 可以建立不同的接口在此取得 mRetrofit 创建的实现类
+ */
+public class PicRetrofitHelper {
+    private static PicRetrofitHelper sInstance = null;
+    private static Retrofit mRetrofit;
+    private IPicService mIPicService = null;
+
+    private PicRetrofitHelper() {
+        mRetrofit = new Retrofit.Builder()
+                .baseUrl("https://api.meizitu.net/")
+                .addConverterFactory(GsonConverterFactory.create())
+                //配置回调库，采用RxJava
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                //可以设置OKHttpClient为网络客户端
+                //.client(okHttpClientBuilder.build())
+                .build();
+    }
+
+    public static PicRetrofitHelper getInstance() {
+        if (sInstance == null) {
+            synchronized (PicRetrofitHelper.class) {
+                if (sInstance == null) {
+                    sInstance = new PicRetrofitHelper();
+                }
+            }
+        }
+
+        return sInstance;
+    }
+
+
+    public IPicService getIPicService() {
+        if (mIPicService == null) {
+            mIPicService = mRetrofit.create(IPicService.class);
+        }
+        return mIPicService;
+    }
+}

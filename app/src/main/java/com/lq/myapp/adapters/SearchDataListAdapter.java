@@ -26,7 +26,7 @@ public class SearchDataListAdapter extends RecyclerView.Adapter<SearchDataListAd
     @NonNull
     @Override
     public InnerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_view, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.video_item_view, parent, false);
         return new InnerHolder(view);
     }
 

@@ -1,34 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="250dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginTop="3dp"
     android:layout_marginLeft="3dp"
+    android:layout_marginTop="3dp"
     android:layout_marginRight="3dp"
-    app:cardCornerRadius="5dp"
-    android:background="@color/colorAccent">
+    android:background="@color/colorAccent"
+    app:cardCornerRadius="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <ImageView
-            android:scaleType="fitXY"
-            android:layout_centerHorizontal="true"
             android:id="@+id/video_cover"
             android:layout_width="match_parent"
-            android:layout_weight="7"
-            android:layout_height="0dp" />
+            android:layout_height="0dp"
+            android:layout_weight="8"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY" />
 
         <TextView
             android:id="@+id/video_name"
-            android:text="生活大爆炸 第一季"
             android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="0dp" />
-
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
 
     </LinearLayout>

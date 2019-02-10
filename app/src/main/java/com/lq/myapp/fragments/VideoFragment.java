@@ -1,7 +1,6 @@
 package com.lq.myapp.fragments;
 
 import android.content.Intent;
-import android.os.Bundle;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,7 +13,7 @@ import com.jimi_wu.ptlrecyclerview.PullToLoad.OnLoadListener;
 import com.jimi_wu.ptlrecyclerview.PullToLoad.PullToLoadRecyclerView;
 import com.lq.myapp.R;
 import com.lq.myapp.VideoPlayActivity;
-import com.lq.myapp.adapters.RecyclerAdapter;
+import com.lq.myapp.adapters.VideoListAdapter;
 import com.lq.myapp.base.BaseApplication;
 import com.lq.myapp.base.BaseFragment;
 import com.lq.myapp.bean.VideoBean;
@@ -25,9 +24,9 @@ import com.lq.myapp.views.UILoader;
 import java.util.List;
 
 public class VideoFragment extends BaseFragment implements IVideoViewCallBack
-        , RecyclerAdapter.OnRecommendItemClickListener, UILoader.OnRetryClickListener {
+        , VideoListAdapter.OnRecommendItemClickListener, UILoader.OnRetryClickListener {
 
-    private RecyclerAdapter mRecyclerAdapter;
+    private VideoListAdapter mVideoListAdapter;
     private PullToLoadRecyclerView mRecyclerView;
     private View mView;
     private String TAG = "VideoFragment";
@@ -76,11 +75,11 @@ public class VideoFragment extends BaseFragment implements IVideoViewCallBack
 
         mRecyclerView.setLayoutManager(gridLayoutManager);
         //设置适配器
-        mRecyclerAdapter = new RecyclerAdapter();
-        mRecyclerAdapter.setOnRecommendItemClickListener(this);
-        Log.d(TAG, "mRecyclerAdapter -->" + mRecyclerAdapter);
+        mVideoListAdapter = new VideoListAdapter();
+        mVideoListAdapter.setOnRecommendItemClickListener(this);
+        Log.d(TAG, "mVideoListAdapter -->" + mVideoListAdapter);
 
-        mRecyclerView.setAdapter(mRecyclerAdapter);
+        mRecyclerView.setAdapter(mVideoListAdapter);
         //上拉加载监听
         mRecyclerView.setOnLoadListener(new OnLoadListener() {
             @Override
@@ -102,15 +101,15 @@ public class VideoFragment extends BaseFragment implements IVideoViewCallBack
     public void onSuccess(final List<VideoBean> data) {
         Log.d(TAG, "onSuccess -->" + data.size());
 
-        mRecyclerAdapter.setData(data);
+        mVideoListAdapter.setData(data);
         mUILoader.updateUIStatus(UILoader.UIStatus.SUCCESS);
         //此处为网络请求的线程中, ui更新需要主线程
         BaseApplication.getsHandler().post(new Runnable() {
             @Override
             public void run() {
-                //必须使用这一句，mRecyclerAdapter.notifyDataSetChanged()没有用
+                //必须使用这一句，mVideoListAdapter.notifyDataSetChanged()没有用
                 mRecyclerView.completeLoad(data.size());
-                //mRecyclerAdapter.notifyDataSetChanged();
+                //mVideoListAdapter.notifyDataSetChanged();
             }
         });
 
@@ -129,9 +128,9 @@ public class VideoFragment extends BaseFragment implements IVideoViewCallBack
         BaseApplication.getsHandler().post(new Runnable() {
             @Override
             public void run() {
-                //必须使用这一句，mRecyclerAdapter.notifyDataSetChanged()没有用
+                //必须使用这一句，mVideoListAdapter.notifyDataSetChanged()没有用
                 mRecyclerView.completeLoad(0);
-                //mRecyclerAdapter.notifyDataSetChanged();
+                //mVideoListAdapter.notifyDataSetChanged();
             }
         });
     }

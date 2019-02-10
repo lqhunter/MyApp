@@ -20,9 +20,9 @@ import java.util.List;
  * Created by lqhunter on 2018/12/27.
  */
 
-public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdapter.InnerHolder> {
+public class RadioRecommendListAdapter extends RecyclerView.Adapter<RadioRecommendListAdapter.InnerHolder> {
 
-    private static final String TAG = "RecommendListAdapter";
+    private static final String TAG = "RadioRecommendListAdapter";
     private List<Album> mData = new ArrayList<>();
     private OnRecommendItemClickListener mRecommendItemClickListener = null;
 

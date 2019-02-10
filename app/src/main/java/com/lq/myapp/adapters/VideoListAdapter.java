@@ -18,16 +18,16 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.InnerHolder> {
+public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.InnerHolder> {
 
-    private String TAG = "RecyclerAdapter";
+    private String TAG = "VideoListAdapter";
     private List<VideoBean> data = new ArrayList<>();
     private OnRecommendItemClickListener mRecommendItemClickListener = null;
 
     @NonNull
     @Override
     public InnerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_view, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.video_item_view, parent, false);
         return new InnerHolder(view);
     }
 
@@ -78,6 +78,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.InnerH
             videoName.setText(data.getTitle());
             Picasso.with(itemView.getContext())
                     .load(data.getCoverURL())
+                    .placeholder(R.mipmap.ic_default_view_vertical)//图片没加载完成时的默认图片
                     .into(videoCover);
         }
     }

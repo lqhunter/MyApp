@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.lq.myapp.RadioDetailActivity;
 import com.lq.myapp.R;
-import com.lq.myapp.adapters.RecommendListAdapter;
+import com.lq.myapp.adapters.RadioRecommendListAdapter;
 import com.lq.myapp.base.BaseFragment;
 import com.lq.myapp.interfaces.IRecommendPresenter;
 import com.lq.myapp.interfaces.IRecommendViewCallBack;
@@ -30,12 +30,12 @@ import java.util.List;
  * Created by lqhunter on 2018/12/26.
  */
 
-public class RadioRecommendFragment extends BaseFragment implements IRecommendViewCallBack, UILoader.OnRetryClickListener, RecommendListAdapter.OnRecommendItemClickListener {
+public class RadioRecommendFragment extends BaseFragment implements IRecommendViewCallBack, UILoader.OnRetryClickListener, RadioRecommendListAdapter.OnRecommendItemClickListener {
 
     private static final String TAG = "RadioRecommendFragment";
     private View mRootView;
     private RecyclerView mRecommendRv;
-    private RecommendListAdapter recommendListAdapter;
+    private RadioRecommendListAdapter mRadioRecommendListAdapter;
     private IRecommendPresenter mRecommendPresenter;
     private UILoader mUILoader;
 
@@ -78,8 +78,8 @@ public class RadioRecommendFragment extends BaseFragment implements IRecommendVi
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecommendRv.setLayoutManager(linearLayoutManager);
         //3.设置适配器
-        recommendListAdapter = new RecommendListAdapter();
-        mRecommendRv.setAdapter(recommendListAdapter);
+        mRadioRecommendListAdapter = new RadioRecommendListAdapter();
+        mRecommendRv.setAdapter(mRadioRecommendListAdapter);
         //item间隔
         mRecommendRv.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
@@ -91,7 +91,7 @@ public class RadioRecommendFragment extends BaseFragment implements IRecommendVi
             }
         });
 
-        recommendListAdapter.setOnRecommendItemClickListener(this);
+        mRadioRecommendListAdapter.setOnRecommendItemClickListener(this);
         return mRootView;
     }
 
@@ -100,7 +100,7 @@ public class RadioRecommendFragment extends BaseFragment implements IRecommendVi
     public void onRecommendListLoad(List<Album> result) {
         LogUtil.d(TAG, Thread.currentThread().getName());
         //数据回来后更新ui
-        recommendListAdapter.setData(result);
+        mRadioRecommendListAdapter.setData(result);
         mUILoader.updateUIStatus(UILoader.UIStatus.SUCCESS);
     }
 
