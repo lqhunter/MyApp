@@ -9,12 +9,12 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.hjm.bottomtabbar.BottomTabBar;
 import com.lq.myapp.fragments.PicFragment;
@@ -96,6 +96,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                int id = item.getItemId();
+
+                switch (id) {
+                    case R.id.search:
+                        Intent intent = new Intent(MainActivity.this, VideoSearchActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.download:
+                        Toast.makeText(MainActivity.this, "download", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.setting:
+                        Toast.makeText(MainActivity.this, "download", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                return true;
+            }
+        });
         //初始化图片界面不显示搜索图标
         mToolbar.getMenu().findItem(R.id.search).setVisible(false);
         return true;
@@ -113,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void changeToolBarRadio() {
         mToolbar.setTitle("电台");
         mToolbar.getMenu().findItem(R.id.search).setVisible(true);
-        SearchView searchView = (SearchView) mToolbar.getMenu().findItem(R.id.search).getActionView();
+        /*SearchView searchView = (SearchView) mToolbar.getMenu().findItem(R.id.search_bar).getActionView();
         searchView.setQueryHint("请输入电台名");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -126,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public boolean onQueryTextChange(String newText) {
                 return false;
             }
-        });
+        });*/
 
     }
 
@@ -134,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mToolbar.setTitle("美剧");
         mToolbar.getMenu().findItem(R.id.search).setVisible(true);
 
-        SearchView searchView = (SearchView) mToolbar.getMenu().findItem(R.id.search).getActionView();
+        /*SearchView searchView = (SearchView) mToolbar.getMenu().findItem(R.id.search_bar).getActionView();
         searchView.setQueryHint("请输入剧名");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -151,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public boolean onQueryTextChange(String newText) {
                 return false;
             }
-        });
+        });*/
     }
 
 

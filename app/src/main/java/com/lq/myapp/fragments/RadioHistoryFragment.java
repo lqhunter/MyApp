@@ -4,16 +4,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.lq.myapp.R;
 import com.lq.myapp.base.BaseFragment;
 
 /**
- * 历史记录
- *
- * Created by lqhunter on 2019/2/7.
+ * Created by lqhunter on 2018/12/26.
  */
-public class HistoryFragment extends BaseFragment {
+
+public class RadioHistoryFragment extends BaseFragment {
     @Override
     protected View onSubViewLoaded(LayoutInflater layoutInflater, ViewGroup container) {
-        return null;
+        View rootView = layoutInflater.inflate(R.layout.frament_radio_history, container, false);
+        return rootView;
     }
 }

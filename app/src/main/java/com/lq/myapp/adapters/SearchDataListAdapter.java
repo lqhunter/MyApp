@@ -1,6 +1,5 @@
 package com.lq.myapp.adapters;
 
-
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import com.lq.myapp.R;
+import com.lq.myapp.base.BaseApplication;
 import com.lq.myapp.bean.VideoBean;
 import com.lq.myapp.utils.LogUtil;
 import com.squareup.picasso.Picasso;
@@ -18,11 +17,11 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.InnerHolder> {
+public class SearchDataListAdapter extends RecyclerView.Adapter<SearchDataListAdapter.InnerHolder> {
 
-    private String TAG = "RecyclerAdapter";
+    private static final String TAG = "SearchDataListAdapter";
     private List<VideoBean> data = new ArrayList<>();
-    private OnRecommendItemClickListener mRecommendItemClickListener = null;
+    private OnItemClickListener mItemClickListener = null;
 
     @NonNull
     @Override
@@ -37,15 +36,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.InnerH
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LogUtil.d(TAG, "點擊了 ======>" + v.getTag());
-                LogUtil.d(TAG, "position ======>" + position);
-                if (mRecommendItemClickListener != null) {
-                    mRecommendItemClickListener.onItemClick((Integer) v.getTag());
-                }
+                LogUtil.d(TAG, "" + position);
+                mItemClickListener.onItemClick(position);
             }
         });
         holder.setItemData(data.get(position));
-
     }
 
     @Override
@@ -58,37 +53,45 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.InnerH
 
     public void setData(List<VideoBean> albumList) {
         if (albumList != null) {
-            //this.data.clear();
+            this.data.clear();
             this.data.addAll(albumList);
         }
+        BaseApplication.getsHandler().post(new Runnable() {
+            @Override
+            public void run() {
+                notifyDataSetChanged();
+            }
+        });
     }
 
+    public VideoBean getData(int position) {
+        if (data != null && position < data.size()) {
+            return data.get(position);
+        } else
+            return null;
+    }
 
-    public class InnerHolder extends RecyclerView.ViewHolder{
-
-
-        public InnerHolder(View itemView) {
+    class InnerHolder extends RecyclerView.ViewHolder{
+        InnerHolder(View itemView) {
             super(itemView);
         }
 
-        public void setItemData(VideoBean data) {
+        void setItemData(VideoBean videoBean) {
             ImageView videoCover = itemView.findViewById(R.id.video_cover);
             TextView videoName = itemView.findViewById(R.id.video_name);
 
-            videoName.setText(data.getTitle());
+            videoName.setText(videoBean.getTitle());
             Picasso.with(itemView.getContext())
-                    .load(data.getCoverURL())
+                    .load(videoBean.getCoverURL())
                     .into(videoCover);
         }
     }
 
-    public void setOnRecommendItemClickListener(OnRecommendItemClickListener listener) {
-        this.mRecommendItemClickListener = listener;
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.mItemClickListener = listener;
     }
 
-    public interface OnRecommendItemClickListener {
+    public interface OnItemClickListener {
         void onItemClick(int position);
     }
-
-
 }

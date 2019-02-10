@@ -1,7 +1,6 @@
 package com.lq.myapp;
 
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -14,14 +13,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.lq.myapp.adapters.VideoDetailListAdapter;
+import com.lq.myapp.base.BaseApplication;
 import com.lq.myapp.bean.VideoBean;
-import com.lq.myapp.presenters.SciencePresenter;
 import com.lq.myapp.presenters.VideoDetailPresenter;
 import com.lq.myapp.utils.LogUtil;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
@@ -47,7 +43,8 @@ public class VideoPlayActivity extends AppCompatActivity implements VideoDetailP
 
 
         Intent intent = getIntent();
-        mVideo = SciencePresenter.getInstance().getData(intent.getExtras().getInt("position"));
+        mVideo = (VideoBean) intent.getSerializableExtra("video_bean");
+        //mVideo = SciencePresenter.getInstance().getData(intent.getExtras().getInt("position"));
         //状态栏透明
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
@@ -55,10 +52,6 @@ public class VideoPlayActivity extends AppCompatActivity implements VideoDetailP
 
         mDetailPresenter = new VideoDetailPresenter(mVideo.getDetailURL(), this);
         mDetailPresenter.setOnGetVideoURLCallBack(this);
-
-
-
-
 
     }
 
@@ -96,14 +89,13 @@ public class VideoPlayActivity extends AppCompatActivity implements VideoDetailP
             //主线路爬取失败，用备线
             mDetailPresenter.getVideoURL(100 + num);
         } else {
-            runOnUiThread(new Runnable() {
+            BaseApplication.getsHandler().post(new Runnable() {
                 @Override
                 public void run() {
                     mJzvdStd.setUp(videoURL, JZVideoPlayer.SCREEN_WINDOW_NORMAL, "第" + num + "集");
                     mVideoPlayerCover.setVisibility(View.GONE);
                     mJzvdStd.setVisibility(View.VISIBLE);
                     mJzvdStd.startVideo();
-
                 }
             });
         }
@@ -115,7 +107,7 @@ public class VideoPlayActivity extends AppCompatActivity implements VideoDetailP
         mListAdapter.setCount(count);
         //设置集数
         mVideoCount.setText("共" + count + "集");
-        runOnUiThread(new Runnable() {
+        BaseApplication.getsHandler().post(new Runnable() {
             @Override
             public void run() {
                 mListAdapter.notifyDataSetChanged();

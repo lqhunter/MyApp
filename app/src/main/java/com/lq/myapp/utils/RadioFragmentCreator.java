@@ -1,9 +1,9 @@
 package com.lq.myapp.utils;
 
 import com.lq.myapp.base.BaseFragment;
-import com.lq.myapp.fragments.HistoryFragment;
-import com.lq.myapp.fragments.RecommendFragment;
-import com.lq.myapp.fragments.SubscribeFragment;
+import com.lq.myapp.fragments.RadioHistoryFragment;
+import com.lq.myapp.fragments.RadioRecommendFragment;
+import com.lq.myapp.fragments.RadioSubscribeFragment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,13 +31,13 @@ public class RadioFragmentCreator {
 
         switch (index) {
             case RADIO_INDEX_RECOMMEND:
-                indexFragment = new RecommendFragment();
+                indexFragment = new RadioRecommendFragment();
                 break;
             case RADIO_INDEX_SUBSCRIBE:
-                indexFragment = new SubscribeFragment();
+                indexFragment = new RadioSubscribeFragment();
                 break;
             case RADIO_INDEX_HISTORY:
-                indexFragment = new HistoryFragment();
+                indexFragment = new RadioHistoryFragment();
                 break;
         }
 

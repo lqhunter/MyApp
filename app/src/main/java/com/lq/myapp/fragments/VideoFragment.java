@@ -152,9 +152,10 @@ public class VideoFragment extends BaseFragment implements IVideoViewCallBack
     @Override
     public void onItemClick(int position) {
         Intent intent = new Intent(getContext(), VideoPlayActivity.class);
-        Bundle bundle = new Bundle();// 创建Bundle对象
+        /*Bundle bundle = new Bundle();// 创建Bundle对象
         bundle.putInt("position", position);//  放入data值为int型
-        intent.putExtras(bundle);
+        intent.putExtras(bundle);*/
+        intent.putExtra("video_bean", SciencePresenter.getInstance().getData(position));
         startActivity(intent);
     }
 

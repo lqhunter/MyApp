@@ -12,7 +12,7 @@ import com.lq.myapp.base.BaseFragment;
  * Created by lqhunter on 2018/12/26.
  */
 
-public class SubscribeFragment extends BaseFragment {
+public class RadioSubscribeFragment extends BaseFragment {
 
 
     @Override

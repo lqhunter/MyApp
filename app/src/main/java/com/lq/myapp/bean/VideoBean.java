@@ -2,7 +2,9 @@ package com.lq.myapp.bean;
 
 import android.widget.ImageView;
 
-public class VideoBean {
+import java.io.Serializable;
+
+public class VideoBean implements Serializable {
 
     private ImageView mImageView;
     private String title;

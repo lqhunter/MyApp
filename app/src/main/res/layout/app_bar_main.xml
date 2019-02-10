@@ -12,8 +12,8 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/main_color"
         app:contentInsetStart="0dp"
-        app:layout_scrollFlags="scroll|enterAlways|snap"
         app:titleTextAppearance="@style/Toolbar.TitleText">
+
 
 
     </android.support.v7.widget.Toolbar>
@@ -24,7 +24,6 @@
         android:id="@+id/bottom_tab_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:tab_bar_background="#FFFFFF"
         app:tab_selected_color="@color/colorAccent"
         app:tab_unselected_color="#000000">

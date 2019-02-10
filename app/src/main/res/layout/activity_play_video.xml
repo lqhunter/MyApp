@@ -31,7 +31,7 @@
 
         <TextView
             android:id="@+id/video_count"
-            android:text="共6集"
+            android:text="共...集"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="0dp" />

@@ -50,4 +50,6 @@ dependencies {
     implementation 'com.jwkj:M3U8Manger:v2.3.0'
     implementation 'cn.jzvd:jiaozivideoplayer:6.2.9'
     implementation 'com.jimi_wu:PTLRecyclerView:1.1.1'
+    implementation 'com.miguelcatalan:materialsearchview:1.4.0'
+
 }

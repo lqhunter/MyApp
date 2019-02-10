@@ -30,9 +30,9 @@ import java.util.List;
  * Created by lqhunter on 2018/12/26.
  */
 
-public class RecommendFragment extends BaseFragment implements IRecommendViewCallBack, UILoader.OnRetryClickListener, RecommendListAdapter.OnRecommendItemClickListener {
+public class RadioRecommendFragment extends BaseFragment implements IRecommendViewCallBack, UILoader.OnRetryClickListener, RecommendListAdapter.OnRecommendItemClickListener {
 
-    private static final String TAG = "RecommendFragment";
+    private static final String TAG = "RadioRecommendFragment";
     private View mRootView;
     private RecyclerView mRecommendRv;
     private RecommendListAdapter recommendListAdapter;
