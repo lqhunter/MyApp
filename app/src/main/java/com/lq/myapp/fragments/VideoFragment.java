@@ -18,7 +18,7 @@ import com.lq.myapp.base.BaseApplication;
 import com.lq.myapp.base.BaseFragment;
 import com.lq.myapp.bean.VideoBean;
 import com.lq.myapp.interfaces.IVideoViewCallBack;
-import com.lq.myapp.presenters.SciencePresenter;
+import com.lq.myapp.presenters.VideoPresenter;
 import com.lq.myapp.views.UILoader;
 
 import java.util.List;
@@ -30,16 +30,16 @@ public class VideoFragment extends BaseFragment implements IVideoViewCallBack
     private PullToLoadRecyclerView mRecyclerView;
     private View mView;
     private String TAG = "VideoFragment";
-    private SciencePresenter mSciencePresenter;
+    private VideoPresenter mVideoPresenter;
     //private android.support.v7.widget.Toolbar mToolbar;
     private UILoader mUILoader;
 
     @Override
     public void initData() {
-        //SciencePresenter 获取数据
-        mSciencePresenter = SciencePresenter.getInstance();
-        mSciencePresenter.setVideoViewCallBack(this);
-        mSciencePresenter.loadData();
+        //VideoPresenter 获取数据
+        mVideoPresenter = VideoPresenter.getInstance();
+        mVideoPresenter.setVideoViewCallBack(this);
+        mVideoPresenter.loadData();
     }
 
     @Override
@@ -85,9 +85,9 @@ public class VideoFragment extends BaseFragment implements IVideoViewCallBack
             @Override
             public void onStartLoading(int skip) {
                 Log.d(TAG, "setOnLoadListener");
-                if (mSciencePresenter != null) {
+                if (mVideoPresenter != null) {
                     //加载更多
-                    mSciencePresenter.loadMore();
+                    mVideoPresenter.loadMore();
                 }
             }
         });
@@ -102,14 +102,13 @@ public class VideoFragment extends BaseFragment implements IVideoViewCallBack
         Log.d(TAG, "onSuccess -->" + data.size());
 
         mVideoListAdapter.setData(data);
-        mUILoader.updateUIStatus(UILoader.UIStatus.SUCCESS);
         //此处为网络请求的线程中, ui更新需要主线程
         BaseApplication.getsHandler().post(new Runnable() {
             @Override
             public void run() {
                 //必须使用这一句，mVideoListAdapter.notifyDataSetChanged()没有用
                 mRecyclerView.completeLoad(data.size());
-                //mVideoListAdapter.notifyDataSetChanged();
+                mUILoader.updateUIStatus(UILoader.UIStatus.SUCCESS);
             }
         });
 
@@ -117,9 +116,7 @@ public class VideoFragment extends BaseFragment implements IVideoViewCallBack
 
     @Override
     public void onLoading() {
-
         mUILoader.updateUIStatus(UILoader.UIStatus.LOADING);
-
     }
 
     @Override
@@ -154,14 +151,14 @@ public class VideoFragment extends BaseFragment implements IVideoViewCallBack
         /*Bundle bundle = new Bundle();// 创建Bundle对象
         bundle.putInt("position", position);//  放入data值为int型
         intent.putExtras(bundle);*/
-        intent.putExtra("video_bean", SciencePresenter.getInstance().getData(position));
+        intent.putExtra("video_bean", VideoPresenter.getInstance().getData(position));
         startActivity(intent);
     }
 
     @Override
     public void onRetryClick() {
-        if (mSciencePresenter != null) {
-            mSciencePresenter.loadData();
+        if (mVideoPresenter != null) {
+            mVideoPresenter.loadData();
         }
     }
 }

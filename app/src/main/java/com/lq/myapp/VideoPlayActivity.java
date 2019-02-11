@@ -44,7 +44,7 @@ public class VideoPlayActivity extends AppCompatActivity implements VideoDetailP
 
         Intent intent = getIntent();
         mVideo = (VideoBean) intent.getSerializableExtra("video_bean");
-        //mVideo = SciencePresenter.getInstance().getData(intent.getExtras().getInt("position"));
+        //mVideo = VideoPresenter.getInstance().getData(intent.getExtras().getInt("position"));
         //状态栏透明
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
         getWindow().setStatusBarColor(Color.TRANSPARENT);

@@ -2,7 +2,7 @@ package com.lq.myapp.bean;
 
 import java.util.List;
 
-public class PicBiziBean {
+public class PicWallpaperBean {
 
     /**
      * msg : success

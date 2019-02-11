@@ -154,24 +154,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mToolbar.setTitle("美剧");
         mToolbar.getMenu().findItem(R.id.search).setVisible(true);
 
-        /*SearchView searchView = (SearchView) mToolbar.getMenu().findItem(R.id.search_bar).getActionView();
-        searchView.setQueryHint("请输入剧名");
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Intent intent = new Intent(MainActivity.this, VideoSearchActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("searchKey", query);
-                intent.putExtras(bundle);
-                startActivity(intent);
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });*/
     }
 
 

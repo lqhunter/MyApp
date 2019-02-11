@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.lq.myapp.R;
-import com.lq.myapp.adapters.IndicaterAdapter;
+import com.lq.myapp.adapters.IndicatorAdapter;
 import com.lq.myapp.adapters.MainContentAdapter;
 import com.lq.myapp.base.BaseFragment;
 import com.lq.myapp.utils.LogUtil;
@@ -21,14 +21,13 @@ public class RadioFragment extends BaseFragment {
     private static final String TAG = "RadioFragment";
     MagicIndicator magicIndicator;
     ViewPager mViewPager;
-    IndicaterAdapter indicaterAdapter;
+    IndicatorAdapter mIndicatorAdapter;
     MainContentAdapter mainContentAdapter;
     private View mRootView;
 
     @Override
     protected View onSubViewLoaded(LayoutInflater layoutInflater, ViewGroup container) {
         mRootView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_main_radio, container, false);
-
 
         initView();
         initEvent();
@@ -37,7 +36,7 @@ public class RadioFragment extends BaseFragment {
     }
 
     private void initEvent() {
-        indicaterAdapter.setIndicaterListener(new IndicaterAdapter.OnIndicaterTapClickListener() {
+        mIndicatorAdapter.setIndicaterListener(new IndicatorAdapter.OnIndicaterTapClickListener() {
             @Override
             public void onTabClick(int index) {
                 LogUtil.d(TAG, "click index is --->" + index);
@@ -57,9 +56,9 @@ public class RadioFragment extends BaseFragment {
         magicIndicator.setBackgroundColor(getResources().getColor(R.color.colorWhite));
 
         //创建 indicater 的适配器
-        indicaterAdapter = new IndicaterAdapter(getContext());
         CommonNavigator commonNavigator = new CommonNavigator(getContext());
-        commonNavigator.setAdapter(indicaterAdapter);
+        mIndicatorAdapter = new IndicatorAdapter(getContext(), R.array.radio_indicator_name);
+        commonNavigator.setAdapter(mIndicatorAdapter);
         commonNavigator.setAdjustMode(true);
 
 

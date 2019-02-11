@@ -13,16 +13,16 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class PicPresenter implements IPicPresenter {
+public class PicMzituPresenter implements IPicPresenter {
 
 
-    private static final String TAG = "PicPresenter";
+    private static final String TAG = "PicMzituPresenter";
     private IPicViewCallBack picViewCallBack = null;
 
     @Override
     public void pull2Refresh(int page) {
-        PicRetrofitHelper.getInstance().getIPicService()
-                .getAlbumsObservable(page)
+        PicRetrofitHelper.getInstance().getIPicMzituService()
+                .getMzituObservable(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<PicMzituBean>>() {
@@ -34,7 +34,10 @@ public class PicPresenter implements IPicPresenter {
                     @Override
                     public void onNext(List<PicMzituBean> value) {
                         LogUtil.d(TAG, "数据大小 -->" + value.size());
-                        picViewCallBack.onRefreshListLoad(value);
+                        if (picViewCallBack != null) {
+
+                            picViewCallBack.onRefreshListLoad(value);
+                        }
 
                     }
 
@@ -53,8 +56,8 @@ public class PicPresenter implements IPicPresenter {
 
     @Override
     public void loadMore(int page) {
-        PicRetrofitHelper.getInstance().getIPicService()
-                .getAlbumsObservable(page)
+        PicRetrofitHelper.getInstance().getIPicMzituService()
+                .getMzituObservable(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<PicMzituBean>>() {
@@ -66,7 +69,9 @@ public class PicPresenter implements IPicPresenter {
                     @Override
                     public void onNext(List<PicMzituBean> value) {
                         LogUtil.d(TAG, value.size() + "");
-                        picViewCallBack.onPicListLoad(value);
+                        if (picViewCallBack != null) {
+                            picViewCallBack.onPicListLoad(value);
+                        }
 
                     }
 

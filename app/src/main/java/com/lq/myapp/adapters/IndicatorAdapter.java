@@ -17,12 +17,12 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.Simple
  *
  * Created by lqhunter on 2018/12/26.
  */
-public class IndicaterAdapter extends CommonNavigatorAdapter {
+public class IndicatorAdapter extends CommonNavigatorAdapter {
     String[] mTitles;
     OnIndicaterTapClickListener onTabClickListener;
 
-    public IndicaterAdapter(Context context) {
-        mTitles = context.getResources().getStringArray(R.array.indicater_name);
+    public IndicatorAdapter(Context context, int id) {
+        mTitles = context.getResources().getStringArray(id);
 
     }
 

@@ -19,7 +19,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class SciencePresenter {
+public class VideoPresenter {
 
     private static boolean hasMore = true;
     private int page = 2;
@@ -27,22 +27,22 @@ public class SciencePresenter {
     List<VideoBean> mAllData = new ArrayList<>();
 
     List<VideoBean> data = new ArrayList<>();
-    private static final String TAG = "SciencePresenter";
+    private static final String TAG = "VideoPresenter";
     String scienceUrl = "https://91mjw.com/category/all_mj/kehuanpian";
     String scienceUrl2 = "https://91mjw.com/category/all_mj/kehuanpian/page/2";
     private IVideoViewCallBack mVideoViewCallBack = null;
-    private static SciencePresenter sInstance = null;
+    private static VideoPresenter sInstance = null;
 
-    private SciencePresenter() {
+    private VideoPresenter() {
 
     }
 
     //单例
-    public static SciencePresenter getInstance() {
+    public static VideoPresenter getInstance() {
         if (sInstance == null) {
             synchronized (RecommendPresenter.class) {
                 if (sInstance == null) {
-                    sInstance = new SciencePresenter();
+                    sInstance = new VideoPresenter();
                 }
             }
         }

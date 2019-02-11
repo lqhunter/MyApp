@@ -3,6 +3,7 @@ package com.lq.myapp.interfaces;
 
 
 import com.lq.myapp.bean.PicMzituBean;
+import com.lq.myapp.bean.PicWallpaperBean;
 
 import java.util.List;
 
@@ -23,7 +24,20 @@ public interface IPicService {
 
     @Headers("referer:https://app.mmzztt.com")
     @GET("wp-json/wp/v2/rand")
-    Observable<List<PicMzituBean>> getAlbumsObservable(@Query("page") int page);
+    Observable<List<PicMzituBean>> getMzituObservable(@Query("page") int page);
+
+    /**
+     * http://service.aibizhi.adesk.com/v1/vertical/category/4e4d610cdf714d2966000003/vertical?limit=30&adult=false&first=1&order=new
+     * http://service.aibizhi.adesk.com/v1/vertical/category/4e4d610cdf714d2966000003/vertical?limit=30&skip=30&adult=false&first=0&order=new
+     * @return
+     */
+
+    @GET("v1/vertical/category/4e4d610cdf714d2966000003/vertical")
+    Observable<PicWallpaperBean> getWallpaperObservable(@Query("limit") int limit,
+                                                        @Query("skip") int skip,
+                                                        @Query("adult") boolean adult,
+                                                        @Query("first") int first,
+                                                        @Query("order") String order);
 
 
 

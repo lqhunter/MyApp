@@ -1,12 +1,21 @@
 <resources>
     <string name="app_name">Himalaya</string>
 
-    <string-array name="indicater_name">
+    <string-array name="radio_indicator_name">
         <item>推荐</item>
         <item>订阅</item>
         <item>历史</item>
 
     </string-array>
+
+    <string-array name="pic_indicator_name">
+        <item>动漫</item>
+        <item>动物</item>
+        <item>妹子</item>
+        <item>福利</item>
+
+    </string-array>
+
     <string name="title_activity_main2">Main2Activity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

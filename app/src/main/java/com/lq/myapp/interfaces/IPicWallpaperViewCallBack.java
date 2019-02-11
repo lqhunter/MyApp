@@ -1,17 +1,18 @@
 package com.lq.myapp.interfaces;
 
 import com.lq.myapp.bean.PicMzituBean;
+import com.lq.myapp.bean.PicWallpaperBean;
 
 import java.util.List;
 
-public interface IPicViewCallBack {
+public interface IPicWallpaperViewCallBack {
     /**
      * 获取内容结果
      */
-    void onPicListLoad(List<PicMzituBean> result);
+    void onPicListLoad(PicWallpaperBean result);
 
 
-    void onRefreshListLoad(List<PicMzituBean> result);
+    void onRefreshListLoad(PicWallpaperBean result);
 
     /**
      * 网络错误
