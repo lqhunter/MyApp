@@ -31,6 +31,7 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity android:name=".VideoSearchActivity" />
+        <activity android:name=".PhotoViewActivity"></activity>
     </application>
 
 </manifest>

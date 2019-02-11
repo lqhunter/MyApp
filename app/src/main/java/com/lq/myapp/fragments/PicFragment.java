@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.lq.myapp.R;
 import com.lq.myapp.adapters.IndicatorAdapter;
 import com.lq.myapp.adapters.PicContentAdapter;
+import com.lq.myapp.base.BaseApplication;
 import com.lq.myapp.base.BaseFragment;
 import com.lq.myapp.utils.LogUtil;
 
@@ -54,7 +55,12 @@ public class PicFragment extends BaseFragment {
         magicIndicator.setBackgroundColor(getResources().getColor(R.color.colorWhite));
         //创建 CommonNavigator 和 IndicatorAdapter
         CommonNavigator commonNavigator = new CommonNavigator(getContext());
-        mIndicatorAdapter = new IndicatorAdapter(getContext(), R.array.pic_indicator_name);
+        if (BaseApplication.showMzitu) {
+            mIndicatorAdapter = new IndicatorAdapter(getContext(), R.array.pic_indicator_name);
+        } else {
+            mIndicatorAdapter = new IndicatorAdapter(getContext(), R.array.pic_indicator_name_no_fuli);
+
+        }
         commonNavigator.setAdapter(mIndicatorAdapter);
         commonNavigator.setAdjustMode(true);
         magicIndicator.setNavigator(commonNavigator);

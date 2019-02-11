@@ -17,6 +17,7 @@ import java.util.List;
 public class PicWallpaperListAdapter extends RecyclerView.Adapter<PicWallpaperListAdapter.InnerHolder> {
 
     private List<PicWallpaperBean.ResBean.VerticalBean> data = new ArrayList<>();
+    private OnItemClickListener onItemClickListener = null;
 
     @NonNull
     @Override
@@ -25,8 +26,14 @@ public class PicWallpaperListAdapter extends RecyclerView.Adapter<PicWallpaperLi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull InnerHolder holder, int position) {
+    public void onBindViewHolder(@NonNull InnerHolder holder, final int position) {
         holder.itemView.setTag(position);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickListener.onItemClick(position, data);
+            }
+        });
         holder.setData(position);
     }
 
@@ -55,5 +62,13 @@ public class PicWallpaperListAdapter extends RecyclerView.Adapter<PicWallpaperLi
                     .placeholder(R.mipmap.ic_default_view_vertical)//图片没加载完成时的默认图片
                     .into(imageView);
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int position, List<PicWallpaperBean.ResBean.VerticalBean> data);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.onItemClickListener = listener;
     }
 }

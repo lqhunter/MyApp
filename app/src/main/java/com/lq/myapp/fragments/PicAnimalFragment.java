@@ -20,7 +20,7 @@ public class PicAnimalFragment extends PicAnimationFragment {
             @Override
             public void loadMore(int skip) {
                 PicRetrofitHelper.getInstance().getIPicWallpaperService()
-                        .getAnimalWallpaperObservable(30, skip, false, 0, "new")
+                        .getAnimalWallpaperObservable(30, skip, true, 0, "new")
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Observer<PicWallpaperBean>() {

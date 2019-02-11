@@ -15,7 +15,7 @@ import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
 public class BaseApplication extends Application {
 
     private static Handler sHandler = null;
-    public static boolean showMzitu = true;
+    public static boolean showMzitu = false;
 
     @Override
     public void onCreate() {

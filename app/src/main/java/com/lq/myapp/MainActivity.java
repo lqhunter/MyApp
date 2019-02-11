@@ -180,7 +180,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.nav_send) {
             Log.d(TAG, "nav_send...");
-
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
