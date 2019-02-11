@@ -1,6 +1,6 @@
 package com.lq.myapp.bean;
 
-public class PicBean {
+public class PicMzituBean {
 
     /**
      * [

@@ -9,8 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lq.myapp.R;
-import com.lq.myapp.bean.PicBean;
-import com.lq.myapp.utils.LogUtil;
+import com.lq.myapp.bean.PicMzituBean;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ import java.util.List;
 public class PicListAdapter extends RecyclerView.Adapter<PicListAdapter.InnerHolder> {
 
     private static final String TAG = "PicListAdapter";
-    private List<PicBean> data = new ArrayList<>();
+    private List<PicMzituBean> data = new ArrayList<>();
 
     @NonNull
     @Override
@@ -44,14 +43,14 @@ public class PicListAdapter extends RecyclerView.Adapter<PicListAdapter.InnerHol
         return 0;
     }
 
-    public void setData(List<PicBean> data) {
+    public void setData(List<PicMzituBean> data) {
         if (data != null) {
             this.data.addAll(data);
         }
 
     }
 
-    public void setRefreshData(List<PicBean> result) {
+    public void setRefreshData(List<PicMzituBean> result) {
         if (data != null) {
             data.clear();
             this.data.addAll(result);

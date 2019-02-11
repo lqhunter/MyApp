@@ -1,6 +1,6 @@
 package com.lq.myapp.interfaces;
 
-import com.lq.myapp.bean.PicBean;
+import com.lq.myapp.bean.PicMzituBean;
 
 import java.util.List;
 
@@ -8,9 +8,9 @@ public interface IPicViewCallBack {
     /**
      * 获取内容结果
      */
-    void onPicListLoad(List<PicBean> result);
+    void onPicListLoad(List<PicMzituBean> result);
 
-    void onRefreshListLoad(List<PicBean> result);
+    void onRefreshListLoad(List<PicMzituBean> result);
 
     /**
      * 网络错误

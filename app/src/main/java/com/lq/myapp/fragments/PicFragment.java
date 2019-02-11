@@ -12,11 +12,10 @@ import com.jimi_wu.ptlrecyclerview.PullToRefresh.OnRefreshListener;
 import com.lq.myapp.R;
 import com.lq.myapp.adapters.PicListAdapter;
 import com.lq.myapp.base.BaseFragment;
-import com.lq.myapp.bean.PicBean;
+import com.lq.myapp.bean.PicMzituBean;
 import com.lq.myapp.interfaces.IPicViewCallBack;
 import com.lq.myapp.presenters.PicPresenter;
 import com.lq.myapp.utils.LogUtil;
-
 import java.util.List;
 
 public class PicFragment extends BaseFragment implements IPicViewCallBack {
@@ -70,13 +69,13 @@ public class PicFragment extends BaseFragment implements IPicViewCallBack {
     }
 
     @Override
-    public void onPicListLoad(List<PicBean> result) {
+    public void onPicListLoad(List<PicMzituBean> result) {
         mPicListAdapter.setData(result);
         mPicRlv.completeLoad(result.size());
     }
 
     @Override
-    public void onRefreshListLoad(List<PicBean> result) {
+    public void onRefreshListLoad(List<PicMzituBean> result) {
         mPicListAdapter.setRefreshData(result);
         mPicRlv.completeRefresh();
 

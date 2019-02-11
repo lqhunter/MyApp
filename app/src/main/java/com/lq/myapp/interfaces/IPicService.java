@@ -2,12 +2,11 @@ package com.lq.myapp.interfaces;
 
 
 
-import com.lq.myapp.bean.PicBean;
+import com.lq.myapp.bean.PicMzituBean;
 
 import java.util.List;
 
 import io.reactivex.Observable;
-import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.Query;
@@ -24,7 +23,8 @@ public interface IPicService {
 
     @Headers("referer:https://app.mmzztt.com")
     @GET("wp-json/wp/v2/rand")
-    Observable<List<PicBean>> getAlbumsObservable(@Query("page") int page);
+    Observable<List<PicMzituBean>> getAlbumsObservable(@Query("page") int page);
+
 
 
 }
