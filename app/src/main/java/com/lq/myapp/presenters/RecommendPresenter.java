@@ -10,6 +10,7 @@ import com.ximalaya.ting.android.opensdk.constants.DTransferConstants;
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
 import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack;
 import com.ximalaya.ting.android.opensdk.model.album.Album;
+import com.ximalaya.ting.android.opensdk.model.album.AlbumList;
 import com.ximalaya.ting.android.opensdk.model.album.GussLikeAlbumList;
 
 import java.util.ArrayList;
@@ -45,33 +46,36 @@ public class RecommendPresenter implements IRecommendPresenter {
     }
 
     /**
-     * 获取推荐内容
-     * 接口：3.10.6 获取猜你喜欢专辑
+     * 3.2.3 根据分类和标签获取某个分类某个标签下的专辑列表（最火/最新/最多播放）
      */
     @Override
     public void getRecommendData() {
         //显示正在加载界面
         updataLoading();
         //获取推荐内容
+        getMoreData(0);
+    }
+
+    @Override
+    public void getMoreData(int skip) {
         Map<String, String> map = new HashMap<>();
-        map.put(DTransferConstants.LIKE_COUNT, Constants.RECOMMEND_COUNT + "");
-        CommonRequest.getGuessLikeAlbum(map, new IDataCallBack<GussLikeAlbumList>() {
+        map.put(DTransferConstants.CATEGORY_ID ,"0");
+        map.put(DTransferConstants.CALC_DIMENSION ,"1");
+        map.put(DTransferConstants.PAGE, (skip / 20 + 1) + "");
+        LogUtil.d(TAG, "page -- >" + (skip / 20 + 1));
+        CommonRequest.getAlbumList(map, new IDataCallBack<AlbumList>() {
             @Override
-            public void onSuccess(@Nullable GussLikeAlbumList gussLikeAlbumList) {
-                if (gussLikeAlbumList != null) {
-                    List<Album> albumList = gussLikeAlbumList.getAlbumList();
+            public void onSuccess(@Nullable AlbumList albumList) {
+                if (albumList != null) {
                     //数据回来更新UI
                     //upRecommendUI(albumList);
-                    LogUtil.d(TAG, Thread.currentThread().getName());
-                    handlerRecommendResult(albumList);
+                    handlerRecommendResult(albumList.getAlbums());
 
                 }
             }
 
             @Override
             public void onError(int i, String s) {
-                //处理错误
-                handlerError();
 
             }
         });

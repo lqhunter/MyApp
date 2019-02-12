@@ -9,6 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.jimi_wu.ptlrecyclerview.AutoLoad.AutoLoadRecyclerView;
+import com.jimi_wu.ptlrecyclerview.LayoutManager.PTLGridLayoutManager;
+import com.jimi_wu.ptlrecyclerview.LayoutManager.PTLLinearLayoutManager;
+import com.jimi_wu.ptlrecyclerview.PullToLoad.OnLoadListener;
 import com.lq.myapp.RadioDetailActivity;
 import com.lq.myapp.R;
 import com.lq.myapp.adapters.RadioRecommendListAdapter;
@@ -34,7 +38,7 @@ public class RadioRecommendFragment extends BaseFragment implements IRecommendVi
 
     private static final String TAG = "RadioRecommendFragment";
     private View mRootView;
-    private RecyclerView mRecommendRv;
+    private AutoLoadRecyclerView mRecommendRv;
     private RadioRecommendListAdapter mRadioRecommendListAdapter;
     private IRecommendPresenter mRecommendPresenter;
     private UILoader mUILoader;
@@ -73,10 +77,10 @@ public class RadioRecommendFragment extends BaseFragment implements IRecommendVi
 
         //1.找到控件
         mRecommendRv = mRootView.findViewById(R.id.recommend_list);
+        mRecommendRv.setRefreshEnable(false);
         //2.设置布局管理器
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecommendRv.setLayoutManager(linearLayoutManager);
+        PTLGridLayoutManager gridLayoutManager = new PTLGridLayoutManager(1, PTLGridLayoutManager.VERTICAL);
+        mRecommendRv.setLayoutManager(gridLayoutManager);
         //3.设置适配器
         mRadioRecommendListAdapter = new RadioRecommendListAdapter();
         mRecommendRv.setAdapter(mRadioRecommendListAdapter);
@@ -90,6 +94,14 @@ public class RadioRecommendFragment extends BaseFragment implements IRecommendVi
                 outRect.right = UIUtil.dip2px(view.getContext(), 5);
             }
         });
+        mRecommendRv.setOnLoadListener(new OnLoadListener() {
+            @Override
+            public void onStartLoading(int skip) {
+                if (mRecommendPresenter != null) {
+                    mRecommendPresenter.getMoreData(skip);
+                }
+            }
+        });
 
         mRadioRecommendListAdapter.setOnRecommendItemClickListener(this);
         return mRootView;
@@ -101,6 +113,7 @@ public class RadioRecommendFragment extends BaseFragment implements IRecommendVi
         LogUtil.d(TAG, Thread.currentThread().getName());
         //数据回来后更新ui
         mRadioRecommendListAdapter.setData(result);
+        mRecommendRv.completeLoad(result.size());
         mUILoader.updateUIStatus(UILoader.UIStatus.SUCCESS);
     }
 

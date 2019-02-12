@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/bg_white"
+    android:layout_height="80dp">
+
+    <TextView
+        android:gravity="center"
+        android:id="@+id/track_number"
+        android:textSize="12sp"
+        android:text="0"
+        android:layout_width="20dp"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:layout_marginLeft="5dp"
+        android:layout_toEndOf="@+id/track_number"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/track_title"
+            android:layout_marginTop="25dp"
+            android:text="第一集 大侦探马丁"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_gravity="center"
+                android:src="@mipmap/radio_play"
+                android:layout_width="10dp"
+                android:layout_height="10dp" />
+
+            <TextView
+                android:id="@+id/track_play_count"
+                android:text="123456"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <!--<TextView
+        android:id="@+id/track_date"
+        android:text="2018-09"
+        android:gravity="center"
+        android:layout_alignParentEnd="true"
+        android:layout_width="100dp"
+        android:layout_height="match_parent" />-->
+
+</RelativeLayout>

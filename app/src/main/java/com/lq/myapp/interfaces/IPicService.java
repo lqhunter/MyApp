@@ -32,13 +32,5 @@ public interface IPicService {
      * @return
      */
 
-    @GET("v1/vertical/category/4e4d610cdf714d2966000003/vertical")
-    Observable<PicWallpaperBean> getWallpaperObservable(@Query("limit") int limit,
-                                                        @Query("skip") int skip,
-                                                        @Query("adult") boolean adult,
-                                                        @Query("first") int first,
-                                                        @Query("order") String order);
-
-
 
 }

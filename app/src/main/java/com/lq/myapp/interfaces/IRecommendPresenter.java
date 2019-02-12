@@ -13,6 +13,10 @@ public interface IRecommendPresenter {
      */
     void getRecommendData();
 
+    /**
+     * 获取推荐加载更过内容
+     */
+    void getMoreData(int skip);
 
     /**
      * 注册ui的回调

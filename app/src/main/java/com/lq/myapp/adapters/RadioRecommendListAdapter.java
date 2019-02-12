@@ -64,11 +64,11 @@ public class RadioRecommendListAdapter extends RecyclerView.Adapter<RadioRecomme
 
     public void setData(List<Album> albumList) {
         if (albumList != null) {
-            mData.clear();
+            //mData.clear();
             mData.addAll(albumList);
         }
         //更新UI
-        notifyDataSetChanged();
+        //notifyDataSetChanged();
     }
 
     public class InnerHolder extends RecyclerView.ViewHolder {

@@ -7,18 +7,14 @@ public interface IDetailPresenter {
      */
     void pull2Refresh();
 
-    /**
-     * 上拉加载更多
-     */
-    void loadMore();
+
 
     /**
      * 获取专辑详情
      *
-     * @param albumId
-     * @param page
+     * @param skip
      */
-    void getAlbumDetail(int albumId, int page);
+    void getAlbumDetail(int skip);
 
     /**
      * 注册ui通知接口

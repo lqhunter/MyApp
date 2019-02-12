@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.github.chrisbanes.photoview.PhotoView;
-import com.squareup.picasso.MemoryPolicy;
+
+import com.bm.library.PhotoView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -38,6 +38,8 @@ public class WallpaperViewPagerAdapter extends PagerAdapter {
         String url = imageUrls.get(position);
         PhotoView photoView = new PhotoView(context);
         photoView.setScaleType(ImageView.ScaleType.FIT_XY);
+        photoView.enable();//设置允许缩放
+
         Picasso.with(context)
                 .load(url)
                 .memoryPolicy(NO_CACHE, NO_STORE)//加载大图不从内存查找，加载完成后不加入内存
