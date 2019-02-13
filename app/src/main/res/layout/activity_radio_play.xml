@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.lq.myapp.RadioPlayActivity">
+
+    <ImageView
+        android:id="@+id/bg_guss"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_gray"
+        android:scaleType="fitXY" />
+
+
+    <RelativeLayout
+        android:id="@+id/msg_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:id="@+id/back_radio_play"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:src="@mipmap/back_white" />
+
+
+        <TextView
+            android:id="@+id/radio_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toStartOf="@+id/share"
+            android:layout_toEndOf="@+id/back_radio_play"
+            android:ellipsize="marquee"
+            android:gravity="center_vertical"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:paddingLeft="10dp"
+            android:singleLine="true"
+            android:textColor="@color/colorWhite"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/share"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/selector_radio_play_share"
+            android:scaleType="fitXY" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/seek_progress"
+        android:layout_below="@+id/msg_bar">
+
+        <com.lq.myapp.views.RotateImageView
+            android:id="@+id/cover"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/radio_play_default" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/seek_progress"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_above="@+id/bottom_toolbar">
+
+        <TextView
+            android:id="@+id/current_status"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toStartOf="@+id/seek_bar"
+            android:text="00:14"
+            android:textColor="@color/colorWhite" />
+
+        <SeekBar
+            android:id="@+id/seek_bar"
+            android:layout_width="280dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:max="1000" />
+
+        <TextView
+            android:id="@+id/total"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@+id/seek_bar"
+            android:text="04:14"
+            android:textColor="@color/colorWhite" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/bottom_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/download"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/selector_radio_play_download" />
+
+        <Button
+            android:id="@+id/prior"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_toStartOf="@+id/play_pause"
+            android:background="@drawable/selector_radio_play_prior" />
+
+        <Button
+            android:id="@+id/play_pause"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/selector_radio_play_pause" />
+
+        <Button
+            android:id="@+id/next"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_toEndOf="@+id/play_pause"
+            android:background="@drawable/selector_radio_play_next" />
+
+        <Button
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/selector_radio_play_list" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

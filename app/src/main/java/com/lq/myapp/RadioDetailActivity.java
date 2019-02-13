@@ -1,19 +1,15 @@
 package com.lq.myapp;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
 import com.jimi_wu.ptlrecyclerview.AutoLoad.AutoLoadRecyclerView;
 import com.jimi_wu.ptlrecyclerview.LayoutManager.PTLGridLayoutManager;
-import com.jimi_wu.ptlrecyclerview.LayoutManager.PTLLinearLayoutManager;
 import com.jimi_wu.ptlrecyclerview.PullToLoad.OnLoadListener;
 import com.lq.myapp.adapters.RadioDetailListViewAdapter;
 import com.lq.myapp.base.BaseActivity;
@@ -54,6 +50,7 @@ public class RadioDetailActivity extends BaseActivity implements IDetailViewCall
 
     private void initData() {
         mDetailPresenter = RadioDetailPresenter.getDetailPresenter();
+        mDetailPresenter.clearTracks();
         mDetailPresenter.registerViewCallback(this);
     }
 
@@ -91,10 +88,16 @@ public class RadioDetailActivity extends BaseActivity implements IDetailViewCall
         PTLGridLayoutManager gridLayoutManager = new PTLGridLayoutManager(1, PTLGridLayoutManager.VERTICAL);
         mRlv.setLayoutManager(gridLayoutManager);
         mListViewAdapter = new RadioDetailListViewAdapter();
+        mListViewAdapter.setOnItemClickListener(new RadioDetailListViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent = new Intent(RadioDetailActivity.this, RadioPlayActivity.class);
+                intent.putExtra("position", position);
+                startActivity(intent);
+
+            }
+        });
         mRlv.setAdapter(mListViewAdapter);
-
-
-
     }
 
     @Override

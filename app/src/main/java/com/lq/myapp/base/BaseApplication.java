@@ -1,11 +1,13 @@
 package com.lq.myapp.base;
 
 import android.app.Application;
+import android.app.Notification;
 import android.os.Handler;
 
 import com.lq.myapp.utils.LogUtil;
 import com.ximalaya.ting.android.opensdk.constants.DTransferConstants;
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
+import com.ximalaya.ting.android.opensdk.player.XmPlayerManager;
 
 /**
  *
@@ -16,6 +18,7 @@ public class BaseApplication extends Application {
 
     private static Handler sHandler = null;
     public static boolean showMzitu = true;
+    private Notification mNotification;
 
     @Override
     public void onCreate() {
@@ -37,10 +40,14 @@ public class BaseApplication extends Application {
         LogUtil.init(this.getPackageName(), false);
 
         sHandler = new Handler();
+
+        mNotification = new Notification();
+        XmPlayerManager.getInstance(this).init(0, mNotification);
     }
 
     public static  Handler getsHandler() {
         return sHandler;
     }
+
 
 }

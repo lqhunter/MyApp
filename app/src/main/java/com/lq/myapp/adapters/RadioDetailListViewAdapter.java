@@ -16,6 +16,7 @@ import java.util.List;
 public class RadioDetailListViewAdapter extends RecyclerView.Adapter<RadioDetailListViewAdapter.InnerHolder> {
 
     private List<Track> data = new ArrayList<>();
+    private OnItemClickListener onItemClickListener = null;
 
     @NonNull
     @Override
@@ -25,8 +26,16 @@ public class RadioDetailListViewAdapter extends RecyclerView.Adapter<RadioDetail
     }
 
     @Override
-    public void onBindViewHolder(@NonNull InnerHolder holder, int position) {
+    public void onBindViewHolder(@NonNull InnerHolder holder, final int position) {
         holder.itemView.setTag(position);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onItemClick(position);
+                }
+            }
+        });
         holder.setItemData(position);
     }
 
@@ -44,7 +53,7 @@ public class RadioDetailListViewAdapter extends RecyclerView.Adapter<RadioDetail
         return 0;
     }
 
-    public class InnerHolder extends RecyclerView.ViewHolder{
+    public class InnerHolder extends RecyclerView.ViewHolder {
 
         private TextView mNumber;
         private TextView mTitle;
@@ -62,8 +71,16 @@ public class RadioDetailListViewAdapter extends RecyclerView.Adapter<RadioDetail
 
             mNumber.setText(position + 1 + "");
             mTitle.setText(track.getTrackTitle());
-            mPlay_count.setText(track.getPlayCount()+ "");
+            mPlay_count.setText(track.getPlayCount() + "");
 
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.onItemClickListener = listener;
     }
 }

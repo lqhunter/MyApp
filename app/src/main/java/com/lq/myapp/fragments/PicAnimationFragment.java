@@ -19,6 +19,7 @@ import com.lq.myapp.presenters.PicWallpaperPresenter;
 import com.lq.myapp.utils.LogUtil;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 

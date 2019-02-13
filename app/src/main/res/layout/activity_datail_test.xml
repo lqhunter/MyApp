@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_below="@+id/iv_large_cover"
-                android:background="@drawable/bg_white">
+                android:background="@drawable/bg_white_bottom_line">
 
 
             </RelativeLayout>
@@ -92,7 +92,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="@drawable/bg_white">
+            android:background="@drawable/bg_white_bottom_line">
 
             <ImageView
                 android:id="@+id/radio_play_status"

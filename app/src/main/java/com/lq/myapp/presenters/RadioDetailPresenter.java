@@ -9,6 +9,7 @@ import com.ximalaya.ting.android.opensdk.constants.DTransferConstants;
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
 import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack;
 import com.ximalaya.ting.android.opensdk.model.album.Album;
+import com.ximalaya.ting.android.opensdk.model.track.Track;
 import com.ximalaya.ting.android.opensdk.model.track.TrackList;
 
 import java.util.ArrayList;
@@ -20,11 +21,19 @@ public class RadioDetailPresenter implements IDetailPresenter {
 
     private static final String TAG = "RadioDetailPresenter";
     private List<IDetailViewCallback> mCallbacks = new ArrayList<>();
-
     private Album mAlbum = null;
 
-    private RadioDetailPresenter() {
+    public List<Track> getTracks() {
+        return mTracks;
+    }
 
+    public void clearTracks() {
+        mTracks.clear();
+    }
+
+    private List<Track> mTracks = new ArrayList<>();
+
+    private RadioDetailPresenter() {
     }
 
     private static RadioDetailPresenter sInstance = null;
@@ -66,7 +75,7 @@ public class RadioDetailPresenter implements IDetailPresenter {
             public void onSuccess(@Nullable TrackList trackList) {
                 if (trackList != null) {
                     LogUtil.d(TAG, "size-->" + trackList.getTracks().size());
-
+                    mTracks.addAll(trackList.getTracks());
                     for (IDetailViewCallback callback : mCallbacks) {
                         callback.onDetailListLoad(trackList.getTracks());
                     }

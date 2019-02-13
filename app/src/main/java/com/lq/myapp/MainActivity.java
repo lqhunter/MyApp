@@ -20,6 +20,10 @@ import com.hjm.bottomtabbar.BottomTabBar;
 import com.lq.myapp.fragments.PicFragment;
 import com.lq.myapp.fragments.RadioFragment;
 import com.lq.myapp.fragments.VideoFragment;
+import com.lq.myapp.utils.LogUtil;
+import com.ximalaya.ting.android.opensdk.player.XmPlayerManager;
+
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -31,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         initView();
     }
 
@@ -54,13 +57,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bottomTabBar.init(getSupportFragmentManager())
                 .setImgSize(50, 50)//设置ICON图片的尺寸
                 .setFontSize(12)//设置文字的尺寸
-                .setTabPadding(4, 6, 10)//设置ICON图片与上部分割线的间隔、图片与文字的间隔、文字与底部的间隔
+                .setTabPadding(10, 6, 10)//设置ICON图片与上部分割线的间隔、图片与文字的间隔、文字与底部的间隔
                 .addTabItem("图片", R.mipmap.picture, PicFragment.class)//设置文字、一张图片、fragment
                 .addTabItem("电台", R.mipmap.radio, RadioFragment.class)
                 .addTabItem("美剧", R.mipmap.movie, VideoFragment.class)
                 .isShowDivider(false)//设置是否显示分割线
-                .setTabBarBackgroundColor(Color.WHITE)//设置底部导航栏颜色
-                //.setTabBarBackgroundResource(R.mipmap.ic_launcher)//设置底部导航栏的背景图片【与设置底部导航栏颜色方法不能同时使用，否则会覆盖掉前边设置的颜色】
+                //.setTabBarBackgroundResource(R.drawable.bg_white)//设置底部导航栏的背景图片【与设置底部导航栏颜色方法不能同时使用，否则会覆盖掉前边设置的颜色】
                 .setOnTabChangeListener(new BottomTabBar.OnTabChangeListener() {
                     @Override
                     public void onTabChange(int position, String name, View view) {
@@ -131,22 +133,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     private void changeToolBarRadio() {
-        mToolbar.setTitle("电台");
-        mToolbar.getMenu().findItem(R.id.search).setVisible(true);
-        /*SearchView searchView = (SearchView) mToolbar.getMenu().findItem(R.id.search_bar).getActionView();
-        searchView.setQueryHint("请输入电台名");
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                //TODO:电台搜索跳转界面
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });*/
+        if (mToolbar != null) {
+            mToolbar.setTitle("电台");
+            mToolbar.getMenu().findItem(R.id.search).setVisible(true);
+        }
 
     }
 
@@ -187,5 +177,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        XmPlayerManager.release();
     }
 }
