@@ -18,7 +18,9 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@+id/iv_large_cover"
-        android:background="@color/colorWhite">
+        android:background="@color/colorWhite"
+        android:clickable="true"
+        android:focusable="true">
 
 
     </RelativeLayout>
@@ -30,12 +32,12 @@
         android:scaleType="fitXY" />
 
     <ImageView
-        android:layout_marginTop="35dp"
-        android:layout_marginStart="10dp"
         android:id="@+id/back"
-        android:src="@mipmap/back_white"
         android:layout_width="25dp"
-        android:layout_height="25dp" />
+        android:layout_height="25dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="35dp"
+        android:src="@mipmap/back_white" />
 
     <com.lq.myapp.views.RoundRectImageView
         android:id="@+id/iv_small_cover"
@@ -64,14 +66,14 @@
             android:textSize="18sp" />
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <ImageView
-                android:src="@mipmap/user"
                 android:layout_width="15dp"
-                android:layout_height="15dp" />
+                android:layout_height="15dp"
+                android:src="@mipmap/user" />
 
             <TextView
                 android:id="@+id/iv_author"
@@ -105,6 +107,8 @@
         android:background="@color/divide_line" />
 
     <RelativeLayout
+        android:clickable="true"
+        android:focusable="true"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -112,20 +116,21 @@
         android:background="@color/colorWhite">
 
         <ImageView
-            android:id="@+id/radio_play_status"
+            android:id="@+id/iv_play_status"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
-            android:src="@mipmap/radio_play" />
+            android:src="@mipmap/playcircleo" />
 
         <TextView
+            android:id="@+id/tv_play_status"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="5dp"
-            android:layout_toEndOf="@+id/radio_play_status"
+            android:layout_toEndOf="@+id/iv_play_status"
             android:gravity="center"
-            android:text="继续播放" />
+            android:text="全部播放" />
 
         <TextView
             android:layout_width="wrap_content"

@@ -67,5 +67,6 @@ public class PicFragment extends BaseFragment {
         //把 ViewPager 和 indicator  绑定, viewPager滑动, indicator也跟着滑动
         ViewPagerHelper.bind(magicIndicator, mViewPager);
 
+
     }
 }

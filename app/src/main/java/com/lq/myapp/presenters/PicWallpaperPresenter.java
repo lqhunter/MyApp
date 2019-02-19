@@ -25,7 +25,7 @@ public class PicWallpaperPresenter implements IPicWallpaperPresenter<IPicWallpap
     @Override
     public void loadMore(int skip) {
         PicRetrofitHelper.getInstance().getIPicWallpaperService()
-                .getAnimeWallpaperObservable(30, skip, true, 0, "new")
+                .getCatoonWallpaperObservable(30, skip, true, 0, "new")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<PicWallpaperBean>() {

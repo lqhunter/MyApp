@@ -22,6 +22,7 @@ import retrofit2.http.Query;
 public interface IPicWallpaperService {
 
     /**
+     * 动漫
      * http://service.aibizhi.adesk.com/v1/vertical/category/4e4d610cdf714d2966000003/vertical?limit=30&adult=false&first=1&order=new
      * http://service.aibizhi.adesk.com/v1/vertical/category/4e4d610cdf714d2966000003/vertical?limit=30&skip=30&adult=false&first=0&order=new
      * @return
@@ -36,6 +37,7 @@ public interface IPicWallpaperService {
 
 
     /**
+     * 妹子
      * http://service.aibizhi.adesk.com/v1/vertical/category/4e4d610cdf714d2966000000/vertical?limit=30&skip=30&adult=false&first=0&order=new
      * @param limit
      * @param skip
@@ -52,6 +54,7 @@ public interface IPicWallpaperService {
                                                              @Query("order") String order);
 
     /**
+     * 动物
      * http://service.aibizhi.adesk.com/v1/vertical/category/4e4d610cdf714d2966000001/vertical?limit=30&skip=30&adult=false&first=0&order=new
      * @param limit
      * @param skip
@@ -62,6 +65,40 @@ public interface IPicWallpaperService {
      */
     @GET("v1/vertical/category/4e4d610cdf714d2966000001/vertical")
     Observable<PicWallpaperBean> getAnimalWallpaperObservable(@Query("limit") int limit,
+                                                              @Query("skip") int skip,
+                                                              @Query("adult") boolean adult,
+                                                              @Query("first") int first,
+                                                              @Query("order") String order);
+
+    /**
+     * 卡通
+     * http://service.aibizhi.adesk.com/v1/vertical/category/4e4d610cdf714d2966000004/vertical?limit=30&adult=false&first=1&order=new
+     * @param limit
+     * @param skip
+     * @param adult
+     * @param first
+     * @param order
+     * @return
+     */
+    @GET("v1/vertical/category/4e4d610cdf714d2966000004/vertical")
+    Observable<PicWallpaperBean> getCatoonWallpaperObservable(@Query("limit") int limit,
+                                                              @Query("skip") int skip,
+                                                              @Query("adult") boolean adult,
+                                                              @Query("first") int first,
+                                                              @Query("order") String order);
+
+    /**
+     * 卡通
+     * http://service.aibizhi.adesk.com/v1/vertical/category/4ef0a3330569795757000000/vertical?limit=30&skip=30&adult=false&first=0&order=new
+     * @param limit
+     * @param skip
+     * @param adult
+     * @param first
+     * @param order
+     * @return
+     */
+    @GET("v1/vertical/category/4ef0a3330569795757000000/vertical")
+    Observable<PicWallpaperBean> getArtWallpaperObservable(@Query("limit") int limit,
                                                               @Query("skip") int skip,
                                                               @Query("adult") boolean adult,
                                                               @Query("first") int first,

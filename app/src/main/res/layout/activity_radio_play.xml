@@ -77,11 +77,13 @@
         android:layout_above="@+id/bottom_toolbar">
 
         <TextView
+            android:textSize="10sp"
+            android:gravity="center_vertical|end"
             android:id="@+id/current_status"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="match_parent"
             android:layout_toStartOf="@+id/seek_bar"
-            android:text="00:14"
+            android:text="00:00"
             android:textColor="@color/colorWhite" />
 
         <SeekBar
@@ -92,11 +94,13 @@
             android:max="1000" />
 
         <TextView
+            android:gravity="center_vertical"
+            android:textSize="10sp"
             android:id="@+id/total"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="match_parent"
             android:layout_toEndOf="@+id/seek_bar"
-            android:text="04:14"
+            android:text="00:00"
             android:textColor="@color/colorWhite" />
 
     </RelativeLayout>

@@ -21,6 +21,11 @@ public class RadioDetailPresenter implements IDetailPresenter {
 
     private static final String TAG = "RadioDetailPresenter";
     private List<IDetailViewCallback> mCallbacks = new ArrayList<>();
+
+    public Album getAlbum() {
+        return mAlbum;
+    }
+
     private Album mAlbum = null;
 
     public List<Track> getTracks() {

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Himalaya</string>
+    <string name="app_name">myapp</string>
 
     <string-array name="radio_indicator_name">
         <item>推荐</item>
@@ -16,9 +16,9 @@
     </string-array>
 
     <string-array name="pic_indicator_name_no_fuli">
-        <item>动漫</item>
+        <item>卡通</item>
         <item>动物</item>
-        <item>妹子</item>
+        <item>艺术</item>
     </string-array>
 
     <string name="title_activity_main2">Main2Activity</string>

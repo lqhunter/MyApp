@@ -17,7 +17,7 @@ import com.ximalaya.ting.android.opensdk.player.XmPlayerManager;
 public class BaseApplication extends Application {
 
     private static Handler sHandler = null;
-    public static boolean showMzitu = true;
+    public static boolean showMzitu = false;
     private Notification mNotification;
 
     @Override
@@ -43,6 +43,8 @@ public class BaseApplication extends Application {
 
         mNotification = new Notification();
         XmPlayerManager.getInstance(this).init(0, mNotification);
+        XmPlayerManager.getInstance(this).setBreakpointResume(false);
+
     }
 
     public static  Handler getsHandler() {

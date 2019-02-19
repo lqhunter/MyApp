@@ -20,7 +20,7 @@ public class PicBeautyFragment extends PicAnimationFragment {
             @Override
             public void loadMore(int skip) {
                 PicRetrofitHelper.getInstance().getIPicWallpaperService()
-                        .getBeautyWallpaperObservable(30, skip, true, 0, "new")
+                        .getArtWallpaperObservable(30, skip, true, 0, "new")
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Observer<PicWallpaperBean>() {

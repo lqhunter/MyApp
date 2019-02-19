@@ -23,4 +23,6 @@ public class ExampleInstrumentedTest {
 
         assertEquals("com.lq.himalaya", appContext.getPackageName());
     }
+
+
 }
