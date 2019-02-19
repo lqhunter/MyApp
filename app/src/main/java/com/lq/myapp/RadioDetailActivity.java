@@ -13,6 +13,7 @@ import com.jimi_wu.ptlrecyclerview.LayoutManager.PTLGridLayoutManager;
 import com.jimi_wu.ptlrecyclerview.PullToLoad.OnLoadListener;
 import com.lq.myapp.adapters.RadioDetailListViewAdapter;
 import com.lq.myapp.base.BaseActivity;
+import com.lq.myapp.base.BaseApplication;
 import com.lq.myapp.interfaces.IDetailViewCallback;
 import com.lq.myapp.presenters.RadioDetailPresenter;
 import com.lq.myapp.utils.BlurTransformation;
@@ -27,6 +28,7 @@ import com.ximalaya.ting.android.opensdk.player.XmPlayerManager;
 import com.ximalaya.ting.android.opensdk.player.service.IXmPlayerStatusListener;
 import com.ximalaya.ting.android.opensdk.player.service.XmPlayerException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RadioDetailActivity extends BaseActivity implements IDetailViewCallback, IXmPlayerStatusListener {
@@ -59,6 +61,7 @@ public class RadioDetailActivity extends BaseActivity implements IDetailViewCall
 
     private void initPlayer() {
         mXmPlayerManager = XmPlayerManager.getInstance(this);
+        mXmPlayerManager.setBreakpointResume(false);
         mXmPlayerManager.addPlayerStatusListener(this);
     }
 
@@ -139,7 +142,6 @@ public class RadioDetailActivity extends BaseActivity implements IDetailViewCall
                 Intent intent = new Intent(RadioDetailActivity.this, RadioPlayActivity.class);
                 intent.putExtra("position", position);
                 startActivity(intent);
-
             }
         });
         mRlv.setAdapter(mListViewAdapter);
@@ -154,7 +156,7 @@ public class RadioDetailActivity extends BaseActivity implements IDetailViewCall
     }
 
     @Override
-    public void onAlbumLoad(Album album) {
+    public void onAlbumLoad(Album album) {//从推荐界面传来的album，注册此界面后回调到这里，初始化不需要访问网络的数据
         mAlbumTitle.setText(album.getAlbumTitle());
         mAlbumAuthor.setText(album.getAnnouncer().getNickname());
 
@@ -162,9 +164,11 @@ public class RadioDetailActivity extends BaseActivity implements IDetailViewCall
         Picasso.with(this).load(album.getCoverUrlLarge()).transform(new BlurTransformation(this)).into(mLargeCover);
 
         //判断详情界面的album与当前播放的albums是否相同，来确认播放按钮的状态
-        if (CurrentPlayerManager.getInstance().getAlbum() != null) {
-            if (album.getId() == CurrentPlayerManager.getInstance().getAlbum().getId()) {
-                //如果相同，就不需要“全部播放”, 如果不同，就默认“全部播放”
+        if (CurrentPlayerManager.getInstance().getAlbum() != null) {//表面当前播放列表有数据
+            if (album.getId() == CurrentPlayerManager.getInstance().getAlbum().getId()) {//如果相同，就不需要“全部播放”, 如果不同，就默认“全部播放”
+                //使正在播放的item显示播放动画
+                mListViewAdapter.setSelectedIndex(mXmPlayerManager.getCurrentIndex());
+                mRlv.completeRefresh();//这个refresh会刷新所有可见的item
                 if (mXmPlayerManager.isPlaying()) {
                     mPlayOrPause.setImageResource(R.mipmap.pausecircleo);
                     mTvPlayStatus.setText("停止播放");
@@ -219,7 +223,8 @@ public class RadioDetailActivity extends BaseActivity implements IDetailViewCall
 
     @Override
     public void onSoundSwitch(PlayableModel playableModel, PlayableModel playableModel1) {
-
+        mListViewAdapter.setSelectedIndex(mXmPlayerManager.getCurrentIndex());
+        mRlv.completeRefresh();//这个refresh会刷新所有可见的item
     }
 
     @Override

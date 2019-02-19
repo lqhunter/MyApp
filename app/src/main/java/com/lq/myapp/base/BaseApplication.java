@@ -43,8 +43,6 @@ public class BaseApplication extends Application {
 
         mNotification = new Notification();
         XmPlayerManager.getInstance(this).init(0, mNotification);
-        XmPlayerManager.getInstance(this).setBreakpointResume(false);
-
     }
 
     public static  Handler getsHandler() {

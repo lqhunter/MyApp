@@ -264,6 +264,7 @@ public class RadioPlayActivity extends AppCompatActivity implements IXmPlayerSta
         if (mSeekBar != null && !isTouchSeekBar) {
             mSeekBar.setProgress((int) progress);
             mCurrentStatus.setText(transData(mXmPlayerManager.getPlayCurrPositon()));
+            mTotal.setText(transData(mXmPlayerManager.getDuration()));
         }
 
 

@@ -9,8 +9,16 @@
         android:id="@+id/track_number"
         android:textSize="12sp"
         android:text="0"
-        android:layout_width="20dp"
+        android:layout_width="30dp"
         android:layout_height="match_parent" />
+
+    <ImageView
+        android:layout_marginStart="5dp"
+        android:id="@+id/iv_isplaying"
+        android:visibility="invisible"
+        android:layout_centerVertical="true"
+        android:layout_width="20dp"
+        android:layout_height="20dp" />
 
     <LinearLayout
         android:layout_marginLeft="5dp"
