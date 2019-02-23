@@ -1,8 +1,6 @@
 package com.lq.myapp;
 
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.widget.Toast;
 
 import com.lq.myapp.utils.LogUtil;
 import com.ximalaya.ting.android.opensdk.auth.call.IXmlyAuthListener;
@@ -51,18 +49,13 @@ public abstract class CustomAuthListener implements IXmlyAuthListener {
         // 从 Bundle 中解析 access token
         mAccessToken = XmlyAuth2AccessToken.parseAccessToken(bundle);
         if (mAccessToken.isSessionValid()) {
-
             /**
-             *
              * 关键!!!!!!!!!!
              * 结果返回之后将取回的结果设置到token管理器中
              */
             AccessTokenManager.getInstanse().setAccessTokenAndUid(mAccessToken.getToken(), mAccessToken
                     .getRefreshToken(), mAccessToken.getExpiresAt(), mAccessToken.getUid());
 
-            /*DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            final String date = sdf.format(new Date(mAccessToken.getExpiresAt()));
-            LogUtil.d(TAG, "data-->" + date);*/
         }
     }
 }

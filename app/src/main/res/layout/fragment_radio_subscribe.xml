@@ -3,11 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:text="订阅界面"
-        android:textSize="30sp"
-        android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
+
+    <com.jimi_wu.ptlrecyclerview.AutoLoad.AutoLoadRecyclerView
+        android:id="@+id/subscribe_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </com.jimi_wu.ptlrecyclerview.AutoLoad.AutoLoadRecyclerView>
+
+    <ImageView
+        android:id="@+id/not_login"
+        android:layout_centerInParent="true"
+        android:src="@mipmap/user"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
 </RelativeLayout>

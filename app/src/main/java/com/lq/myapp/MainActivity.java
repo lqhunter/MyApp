@@ -1,6 +1,7 @@
 package com.lq.myapp;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import com.hjm.bottomtabbar.BottomTabBar;
 import com.lq.myapp.fragments.PicFragment;
 import com.lq.myapp.fragments.RadioFragment;
+import com.lq.myapp.fragments.UserFragment;
 import com.lq.myapp.fragments.VideoFragment;
 import com.lq.myapp.utils.LogUtil;
 import com.squareup.picasso.Picasso;
@@ -37,47 +39,30 @@ import com.ximalaya.ting.android.opensdk.player.XmPlayerManager;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private Toolbar mToolbar;
-    private ImageView mUser;
-    private boolean isLogging = false;
-
-    /**
-     * 喜马拉雅授权实体类对象
-     */
-    private XmlyAuthInfo mAuthInfo;
-    /**
-     * 喜马拉雅授权管理类对象
-     */
-    private XmlySsoHandler mSsoHandler;
-    /**
-     * 当前 DEMO 应用的回调页，第三方应用应该使用自己的回调页。
-     */
-//    public static final String REDIRECT_URL =  "http://api.ximalaya.com";
-    public static final String REDIRECT_URL = DTransferConstants.isRelease ?
-            "http://api.ximalaya.com/openapi-collector-app/get_access_token" :
-            "http://studio.test.ximalaya.com/qunfeng-web/access_token/callback";
-    private TextView mUsername;
+    private BottomTabBar mBottomTabBar;
+    private int currentIndex = 0;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initLogin();
+
+        //状态栏透明
+        //getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+        //getWindow().setStatusBarColor(Color.TRANSPARENT);
+
         initView();
     }
 
-    private void initLogin() {
-        try {
-            mAuthInfo = new XmlyAuthInfo(this, CommonRequest.getInstanse().getAppKey(), CommonRequest.getInstanse()
-                    .getPackId(), REDIRECT_URL, DTransferConstants.isRelease ? CommonRequest.getInstanse().getAppKey() : "qunfeng");
-        } catch (XimalayaException e) {
-            e.printStackTrace();
-        }
-        mSsoHandler = new XmlySsoHandler(this, mAuthInfo);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //initView();
     }
 
     private void initView() {
@@ -86,52 +71,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mToolbar = findViewById(R.id.test_tool_bar);
         setSupportActionBar(mToolbar);
 
-        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        View headerView = navigationView.getHeaderView(0);
-        mUser = headerView.findViewById(R.id.iv_user);
-        mUsername = headerView.findViewById(R.id.user_name);
-        mUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isLogging) {
-                    mSsoHandler.authorizeWeb(new CustomAuthListener() {
-                        @Override
-                        public void initUserInfo() {
-                            Map<String ,String > map = new HashMap<>();
-                            CommonRequest.getBaseUserInfo(map, new IDataCallBack<XmBaseUserInfo>() {
-                                @Override
-                                public void onSuccess(@Nullable XmBaseUserInfo xmBaseUserInfo) {
-                                    mUsername.setText(xmBaseUserInfo.getNickName());
-                                    Picasso.with(MainActivity.this).load(xmBaseUserInfo.getAvatarUrl()).into(mUser);
-                                }
-
-                                @Override
-                                public void onError(int i, String s) {
-                                    LogUtil.e(TAG, "获取用户信息失败");
-                                }
-                            });
-                            isLogging = true;
-                        }
-                    });
-                }
-
-            }
-        });
-
-        BottomTabBar bottomTabBar = findViewById(R.id.bottom_tab_bar);
-        bottomTabBar.init(getSupportFragmentManager())
+        mBottomTabBar = findViewById(R.id.bottom_tab_bar);
+        mBottomTabBar.init(getSupportFragmentManager())
                 .setImgSize(50, 50)//设置ICON图片的尺寸
                 .setFontSize(12)//设置文字的尺寸
                 .setTabPadding(10, 6, 10)//设置ICON图片与上部分割线的间隔、图片与文字的间隔、文字与底部的间隔
                 .addTabItem("图片", R.mipmap.picture, PicFragment.class)//设置文字、一张图片、fragment
                 .addTabItem("电台", R.mipmap.radio, RadioFragment.class)
                 .addTabItem("美剧", R.mipmap.movie, VideoFragment.class)
+                .addTabItem("我的", R.mipmap.main_user, UserFragment.class)
                 .isShowDivider(false)//设置是否显示分割线
                 //.setTabBarBackgroundResource(R.drawable.bg_white)//设置底部导航栏的背景图片【与设置底部导航栏颜色方法不能同时使用，否则会覆盖掉前边设置的颜色】
                 .setOnTabChangeListener(new BottomTabBar.OnTabChangeListener() {
@@ -140,12 +88,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         switch (position) {
                             case 0:
                                 changeToolBarPic(); //改变对应的toolbar视图
+                                currentIndex = 0;
                                 break;
                             case 1:
                                 changeToolBarRadio();
+                                currentIndex = 1;
+
                                 break;
                             case 2:
                                 changeToolBarVideo();
+                                currentIndex = 2;
+
                                 break;
                         }
                         Log.d(TAG, "position" + position);
@@ -155,15 +108,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -176,8 +120,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 switch (id) {
                     case R.id.search:
-                        Intent intent = new Intent(MainActivity.this, VideoSearchActivity.class);
-                        startActivity(intent);
+                        jumpToSearchActivity();
                         break;
                     case R.id.tool_bar_download:
                         Toast.makeText(MainActivity.this, "点击了下载", Toast.LENGTH_SHORT).show();
@@ -192,6 +135,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //初始化图片界面不显示搜索图标
         mToolbar.getMenu().findItem(R.id.search).setVisible(false);
         return true;
+    }
+
+    private void jumpToSearchActivity() {
+        Intent intent = new Intent();
+        if (currentIndex == 2) {
+            intent.setClass(MainActivity.this, VideoSearchActivity.class);
+            startActivity(intent);
+        } else if (currentIndex == 1) {
+            intent.setClass(MainActivity.this, RadioSearchActivity.class);
+        }
+        startActivity(intent);
     }
 
     private void changeToolBarPic() {
@@ -217,38 +171,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_home) {
-            Log.d(TAG, "nav_camera...");
-
-            // Handle the camera action
-        } else if (id == R.id.nav_history) {
-            Log.d(TAG, "nav_gallery...");
-
-        } else if (id == R.id.nav_download) {
-            Log.d(TAG, "nav_slideshow...");
-
-        } else if (id == R.id.nav_favorite) {
-            Log.d(TAG, "nav_manage...");
-
-        } else if (id == R.id.nav_share) {
-            Log.d(TAG, "nav_share...");
-
-        } else if (id == R.id.nav_send) {
-            Log.d(TAG, "nav_send...");
-        }
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-
-
-        return true;
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

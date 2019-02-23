@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="75dp"
+    android:background="@drawable/bg_white_bottom_line">
+
+    <com.lq.myapp.views.RoundRectImageView
+        android:id="@+id/album_cover"
+        android:layout_width="68dp"
+        android:layout_height="65dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="5dp"
+        android:scaleType="fitXY" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@id/album_cover"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/album_title_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:lines="1"
+            android:text="hello world"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/album_description_tv"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_marginTop="3dp"
+            android:ellipsize="end"
+            android:lines="1"
+            android:text="为你开启成功之路"
+            android:textColor="#ff848484"
+            android:textSize="12sp" />
+
+
+        <TextView
+            android:id="@+id/latest_update"
+            android:layout_marginTop="3dp"
+            android:textSize="12sp"
+            android:text="1天前"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</RelativeLayout>
