@@ -1,5 +1,9 @@
 package com.lq.myapp;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,7 +17,6 @@ import com.jimi_wu.ptlrecyclerview.LayoutManager.PTLGridLayoutManager;
 import com.jimi_wu.ptlrecyclerview.PullToLoad.OnLoadListener;
 import com.lq.myapp.adapters.RadioDetailListViewAdapter;
 import com.lq.myapp.base.BaseActivity;
-import com.lq.myapp.base.BaseApplication;
 import com.lq.myapp.interfaces.IDetailViewCallback;
 import com.lq.myapp.presenters.RadioDetailPresenter;
 import com.lq.myapp.utils.BlurTransformation;
@@ -25,6 +28,7 @@ import com.ximalaya.ting.android.opensdk.model.PlayableModel;
 import com.ximalaya.ting.android.opensdk.model.album.Album;
 import com.ximalaya.ting.android.opensdk.model.track.Track;
 import com.ximalaya.ting.android.opensdk.player.XmPlayerManager;
+import com.ximalaya.ting.android.opensdk.player.appnotification.XmNotificationCreater;
 import com.ximalaya.ting.android.opensdk.player.service.IXmPlayerStatusListener;
 import com.ximalaya.ting.android.opensdk.player.service.XmPlayerException;
 
@@ -60,9 +64,12 @@ public class RadioDetailActivity extends BaseActivity implements IDetailViewCall
     }
 
     private void initPlayer() {
+        Notification mNotification = XmNotificationCreater.getInstanse(this).initNotification(this.getApplicationContext(), RadioPlayActivity.class);
         mXmPlayerManager = XmPlayerManager.getInstance(this);
+        mXmPlayerManager.init((int) System.currentTimeMillis(), mNotification);
         mXmPlayerManager.setBreakpointResume(false);
         mXmPlayerManager.addPlayerStatusListener(this);
+
     }
 
     private void initData() {
@@ -198,6 +205,7 @@ public class RadioDetailActivity extends BaseActivity implements IDetailViewCall
             mPlayOrPause.setImageResource(R.mipmap.pausecircleo);
             mTvPlayStatus.setText("停止播放");
         }
+
     }
 
     @Override

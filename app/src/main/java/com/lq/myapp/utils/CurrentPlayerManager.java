@@ -1,7 +1,13 @@
 package com.lq.myapp.utils;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
+
+import com.lq.myapp.R;
 import com.ximalaya.ting.android.opensdk.model.album.Album;
 import com.ximalaya.ting.android.opensdk.model.track.Track;
+import com.ximalaya.ting.android.opensdk.player.service.XmPlayListControl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,12 +19,21 @@ public class CurrentPlayerManager {
 
     private Album mAlbum;
     private List<Track> mTracks = new ArrayList<>();
-
+    private XmPlayListControl.PlayMode mPlayMode;
 
     private static CurrentPlayerManager instance = null;
 
-    private CurrentPlayerManager() {
 
+    public XmPlayListControl.PlayMode getPlayMode() {
+        return mPlayMode;
+    }
+
+    public void setPlayMode(XmPlayListControl.PlayMode playMode) {
+        mPlayMode = playMode;
+    }
+
+    private CurrentPlayerManager() {
+        mPlayMode = XmPlayListControl.PlayMode.PLAY_MODEL_LIST_LOOP;
     }
 
     public static CurrentPlayerManager getInstance() {
@@ -46,5 +61,16 @@ public class CurrentPlayerManager {
 
     public void setTracks(List<Track> tracks) {
         mTracks = tracks;
+    }
+
+    public XmPlayListControl.PlayMode getNextPlayMode() {
+        if (mPlayMode == XmPlayListControl.PlayMode.PLAY_MODEL_LIST_LOOP) {
+            mPlayMode = XmPlayListControl.PlayMode.PLAY_MODEL_SINGLE_LOOP;
+        } else if (mPlayMode == XmPlayListControl.PlayMode.PLAY_MODEL_SINGLE_LOOP){
+            mPlayMode = XmPlayListControl.PlayMode.PLAY_MODEL_RANDOM;
+        } else if (mPlayMode == XmPlayListControl.PlayMode.PLAY_MODEL_RANDOM) {
+            mPlayMode = XmPlayListControl.PlayMode.PLAY_MODEL_LIST_LOOP;
+        }
+        return mPlayMode;
     }
 }

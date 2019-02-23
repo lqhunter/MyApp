@@ -103,13 +103,13 @@ public class VideoPlayActivity extends AppCompatActivity implements VideoDetailP
     }
 
     @Override
-    public void onGetCount(int count) {
+    public void onGetCount(final int count) {
         mListAdapter.setCount(count);
         //设置集数
-        mVideoCount.setText("共" + count + "集");
         BaseApplication.getsHandler().post(new Runnable() {
             @Override
             public void run() {
+                mVideoCount.setText("共" + count + "集");
                 mListAdapter.notifyDataSetChanged();
             }
         });
@@ -122,6 +122,7 @@ public class VideoPlayActivity extends AppCompatActivity implements VideoDetailP
         }
         super.onBackPressed();
     }
+
     @Override
     protected void onPause() {
         super.onPause();

@@ -1,9 +1,9 @@
 package com.lq.myapp;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,6 +14,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hjm.bottomtabbar.BottomTabBar;
@@ -21,21 +23,61 @@ import com.lq.myapp.fragments.PicFragment;
 import com.lq.myapp.fragments.RadioFragment;
 import com.lq.myapp.fragments.VideoFragment;
 import com.lq.myapp.utils.LogUtil;
+import com.squareup.picasso.Picasso;
+import com.ximalaya.ting.android.opensdk.auth.component.XmlyBrowserComponent;
+import com.ximalaya.ting.android.opensdk.auth.handler.XmlySsoHandler;
+import com.ximalaya.ting.android.opensdk.auth.model.XmlyAuthInfo;
+import com.ximalaya.ting.android.opensdk.constants.DTransferConstants;
+import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
+import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack;
+import com.ximalaya.ting.android.opensdk.httputil.XimalayaException;
+import com.ximalaya.ting.android.opensdk.model.user.XmBaseUserInfo;
 import com.ximalaya.ting.android.opensdk.player.XmPlayerManager;
 
-import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "MainActivity";
     private Toolbar mToolbar;
+    private ImageView mUser;
+    private boolean isLogging = false;
+
+    /**
+     * 喜马拉雅授权实体类对象
+     */
+    private XmlyAuthInfo mAuthInfo;
+    /**
+     * 喜马拉雅授权管理类对象
+     */
+    private XmlySsoHandler mSsoHandler;
+    /**
+     * 当前 DEMO 应用的回调页，第三方应用应该使用自己的回调页。
+     */
+//    public static final String REDIRECT_URL =  "http://api.ximalaya.com";
+    public static final String REDIRECT_URL = DTransferConstants.isRelease ?
+            "http://api.ximalaya.com/openapi-collector-app/get_access_token" :
+            "http://studio.test.ximalaya.com/qunfeng-web/access_token/callback";
+    private TextView mUsername;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initLogin();
         initView();
+    }
+
+    private void initLogin() {
+        try {
+            mAuthInfo = new XmlyAuthInfo(this, CommonRequest.getInstanse().getAppKey(), CommonRequest.getInstanse()
+                    .getPackId(), REDIRECT_URL, DTransferConstants.isRelease ? CommonRequest.getInstanse().getAppKey() : "qunfeng");
+        } catch (XimalayaException e) {
+            e.printStackTrace();
+        }
+        mSsoHandler = new XmlySsoHandler(this, mAuthInfo);
     }
 
     private void initView() {
@@ -51,7 +93,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        mUser = headerView.findViewById(R.id.iv_user);
+        mUsername = headerView.findViewById(R.id.user_name);
+        mUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isLogging) {
+                    mSsoHandler.authorizeWeb(new CustomAuthListener() {
+                        @Override
+                        public void initUserInfo() {
+                            Map<String ,String > map = new HashMap<>();
+                            CommonRequest.getBaseUserInfo(map, new IDataCallBack<XmBaseUserInfo>() {
+                                @Override
+                                public void onSuccess(@Nullable XmBaseUserInfo xmBaseUserInfo) {
+                                    mUsername.setText(xmBaseUserInfo.getNickName());
+                                    Picasso.with(MainActivity.this).load(xmBaseUserInfo.getAvatarUrl()).into(mUser);
+                                }
 
+                                @Override
+                                public void onError(int i, String s) {
+                                    LogUtil.e(TAG, "获取用户信息失败");
+                                }
+                            });
+                            isLogging = true;
+                        }
+                    });
+                }
+
+            }
+        });
 
         BottomTabBar bottomTabBar = findViewById(R.id.bottom_tab_bar);
         bottomTabBar.init(getSupportFragmentManager())
@@ -108,11 +179,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         Intent intent = new Intent(MainActivity.this, VideoSearchActivity.class);
                         startActivity(intent);
                         break;
-                    case R.id.download:
-                        Toast.makeText(MainActivity.this, "download", Toast.LENGTH_SHORT).show();
+                    case R.id.tool_bar_download:
+                        Toast.makeText(MainActivity.this, "点击了下载", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.setting:
-                        Toast.makeText(MainActivity.this, "download", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "点击了", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 return true;
@@ -177,6 +248,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

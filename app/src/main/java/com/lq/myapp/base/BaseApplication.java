@@ -18,7 +18,6 @@ public class BaseApplication extends Application {
 
     private static Handler sHandler = null;
     public static boolean showMzitu = false;
-    private Notification mNotification;
 
     @Override
     public void onCreate() {
@@ -41,8 +40,9 @@ public class BaseApplication extends Application {
 
         sHandler = new Handler();
 
-        mNotification = new Notification();
-        XmPlayerManager.getInstance(this).init(0, mNotification);
+        Notification notification = new Notification();
+        XmPlayerManager.getInstance(this).init(1, notification);
+
     }
 
     public static  Handler getsHandler() {

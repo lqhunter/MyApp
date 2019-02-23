@@ -1,7 +1,6 @@
 package com.lq.myapp;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lq.myapp.presenters.RadioDetailPresenter;
 import com.lq.myapp.utils.BlurTransformation;
@@ -22,6 +22,7 @@ import com.ximalaya.ting.android.opensdk.model.PlayableModel;
 import com.ximalaya.ting.android.opensdk.model.track.Track;
 import com.ximalaya.ting.android.opensdk.player.XmPlayerManager;
 import com.ximalaya.ting.android.opensdk.player.service.IXmPlayerStatusListener;
+import com.ximalaya.ting.android.opensdk.player.service.XmPlayListControl;
 import com.ximalaya.ting.android.opensdk.player.service.XmPlayerException;
 
 import java.text.SimpleDateFormat;
@@ -39,12 +40,13 @@ public class RadioPlayActivity extends AppCompatActivity implements IXmPlayerSta
     private Button mPrior;
     private Button mNext;
     private SeekBar mSeekBar;
-    private Button mDownload;
+    private Button mPlayOrder;
     private TextView mCurrentStatus;
     private TextView mTotal;
 
     private boolean isTouchSeekBar = false;
     private int touchProgress;
+    private CurrentPlayerManager mCurrentPlayerManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,8 @@ public class RadioPlayActivity extends AppCompatActivity implements IXmPlayerSta
         mXmPlayerManager = XmPlayerManager.getInstance(this);
         mXmPlayerManager.addPlayerStatusListener(this);
 
+        mCurrentPlayerManager = CurrentPlayerManager.getInstance();
+        mXmPlayerManager.setPlayMode(mCurrentPlayerManager.getPlayMode());
     }
 
     private void initData() {
@@ -72,7 +76,7 @@ public class RadioPlayActivity extends AppCompatActivity implements IXmPlayerSta
         if (-1 != position) {
             List<Track> mTracks = RadioDetailPresenter.getDetailPresenter().getTracks();
             mXmPlayerManager.playList(mTracks, position);
-            CurrentPlayerManager.getInstance().setAlbum(RadioDetailPresenter.getDetailPresenter().getAlbum());
+            mCurrentPlayerManager.setAlbum(RadioDetailPresenter.getDetailPresenter().getAlbum());
 
         }
         mCurrentTrack = mXmPlayerManager.getTrack(mXmPlayerManager.getCurrentIndex());
@@ -154,23 +158,25 @@ public class RadioPlayActivity extends AppCompatActivity implements IXmPlayerSta
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 isTouchSeekBar = true;
-                //mXmPlayerManager.pause();
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                //mXmPlayerManager.seekToByPercent((float) (touchProgress / 1000.0));
-                //mXmPlayerManager.play();
                 LogUtil.d(TAG, "触摸结束百分百-->" + (float) (touchProgress / 10.0));
                 isTouchSeekBar = false;
             }
         });
 
-        mDownload = findViewById(R.id.download);
-        mDownload.setOnClickListener(new View.OnClickListener() {
+        mPlayOrder = findViewById(R.id.play_mode);
+        setPlayModeView(mCurrentPlayerManager.getPlayMode(), false);
+        mPlayOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (mXmPlayerManager != null) {
+                    XmPlayListControl.PlayMode playMode = mCurrentPlayerManager.getNextPlayMode();
+                    mXmPlayerManager.setPlayMode(playMode);
+                    setPlayModeView(playMode, true);
+                }
 
             }
         });
@@ -179,6 +185,25 @@ public class RadioPlayActivity extends AppCompatActivity implements IXmPlayerSta
         mTotal = findViewById(R.id.total);
 
 
+    }
+
+    private void setPlayModeView(XmPlayListControl.PlayMode playMode, boolean isShowToast) {
+        if (playMode == XmPlayListControl.PlayMode.PLAY_MODEL_LIST_LOOP) {
+            mPlayOrder.setBackground(getResources().getDrawable(R.drawable.selector_radio_play_order_default));
+            if (isShowToast) {
+                Toast.makeText(RadioPlayActivity.this, "列表循环", Toast.LENGTH_SHORT).show();
+            }
+        } else if (playMode == XmPlayListControl.PlayMode.PLAY_MODEL_SINGLE_LOOP) {
+            mPlayOrder.setBackground(getResources().getDrawable(R.drawable.selector_radio_play_order_single_loop));
+            if (isShowToast) {
+                Toast.makeText(RadioPlayActivity.this, "单曲循环", Toast.LENGTH_SHORT).show();
+            }
+        } else if (playMode == XmPlayListControl.PlayMode.PLAY_MODEL_RANDOM) {
+            mPlayOrder.setBackground(getResources().getDrawable(R.drawable.selector_radio_play_order_random));
+            if (isShowToast) {
+                Toast.makeText(RadioPlayActivity.this, "随机播放", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override
@@ -237,8 +262,6 @@ public class RadioPlayActivity extends AppCompatActivity implements IXmPlayerSta
                 mTitle.setText(mCurrentTrack.getTrackTitle());
             }
         }
-
-
     }
 
     @Override
