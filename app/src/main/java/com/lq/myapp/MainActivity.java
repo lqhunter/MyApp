@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hjm.bottomtabbar.BottomTabBar;
+import com.lq.myapp.base.BaseApplication;
 import com.lq.myapp.fragments.PicFragment;
 import com.lq.myapp.fragments.RadioFragment;
 import com.lq.myapp.fragments.UserFragment;

@@ -3,20 +3,19 @@ package com.lq.myapp.fragments;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jimi_wu.ptlrecyclerview.AutoLoad.AutoLoadRecyclerView;
 import com.jimi_wu.ptlrecyclerview.LayoutManager.PTLGridLayoutManager;
+import com.jimi_wu.ptlrecyclerview.PullToRefresh.OnRefreshListener;
 import com.lq.myapp.R;
 import com.lq.myapp.adapters.RadioSubscribeListAdapter;
 import com.lq.myapp.base.BaseFragment;
 import com.lq.myapp.interfaces.ISubscribeViewCallBack;
 import com.lq.myapp.presenters.SubscribePresenter;
 import com.lq.myapp.utils.LogUtil;
-import com.ximalaya.ting.android.opensdk.datatrasfer.AccessTokenManager;
-import com.ximalaya.ting.android.opensdk.datatrasfer.ILoginOutCallBack;
 import com.ximalaya.ting.android.opensdk.model.album.Album;
 
 import java.util.List;
@@ -35,6 +34,7 @@ public class RadioSubscribeFragment extends BaseFragment implements ISubscribeVi
     private RadioSubscribeListAdapter mListAdapter;
     private SubscribePresenter mSubscribePresenter;
     private ImageView mNotLogin;
+    private TextView mNotLoginText;
 
     @Override
     protected View onSubViewLoaded(LayoutInflater layoutInflater, ViewGroup container) {
@@ -53,7 +53,8 @@ public class RadioSubscribeFragment extends BaseFragment implements ISubscribeVi
     }
 
     private void initView() {
-        mNotLogin = mRootView.findViewById(R.id.not_login);
+        mNotLogin = mRootView.findViewById(R.id.not_login_image);
+        mNotLoginText = mRootView.findViewById(R.id.not_login_text);
         mNotLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,6 +70,16 @@ public class RadioSubscribeFragment extends BaseFragment implements ISubscribeVi
 
         mListAdapter = new RadioSubscribeListAdapter();
         mRlv.setAdapter(mListAdapter);
+        mRlv.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onStartRefreshing() {
+                if (mSubscribePresenter != null) {
+                    mSubscribePresenter.getSubscribeData();
+                    mListAdapter.clearData();
+                    mRlv.completeRefresh();
+                }
+            }
+        });
     }
 
     @Override
@@ -78,10 +89,13 @@ public class RadioSubscribeFragment extends BaseFragment implements ISubscribeVi
     @Override
     public void onSubscribeListLoad(List<Album> result) {
         mNotLogin.setVisibility(View.GONE);
+        mNotLoginText.setVisibility(View.GONE);
         if (result != null && !result.isEmpty()) {
             LogUtil.d(TAG, "数据大小。。。" + result.size());
             mListAdapter.setData(result);
-            mRlv.completeLoad(result.size());
+            mRlv.completeRefresh();
+            //mRlv.completeLoad(result.size());
+            mRlv.setNoMore(true);
         }
     }
 

@@ -58,6 +58,10 @@ public class RadioSubscribeListAdapter extends RecyclerView.Adapter<RadioSubscri
         this.data.addAll(data);
     }
 
+    public void clearData() {
+        this.data.clear();
+    }
+
     class InnerHolder extends RecyclerView.ViewHolder {
         public InnerHolder(View itemView) {
             super(itemView);

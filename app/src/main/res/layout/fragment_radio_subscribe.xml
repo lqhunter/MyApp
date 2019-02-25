@@ -5,17 +5,28 @@
 
 
 
+    <ImageView
+        android:id="@+id/not_login_image"
+        android:layout_centerInParent="true"
+        android:src="@mipmap/empty"
+        android:layout_width="200dp"
+        android:layout_height="200dp" />
+
+    <TextView
+        android:layout_marginTop="5dp"
+        android:text="请登陆后点击刷新"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/not_login_image"
+        android:id="@+id/not_login_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+
     <com.jimi_wu.ptlrecyclerview.AutoLoad.AutoLoadRecyclerView
         android:id="@+id/subscribe_list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     </com.jimi_wu.ptlrecyclerview.AutoLoad.AutoLoadRecyclerView>
-
-    <ImageView
-        android:id="@+id/not_login"
-        android:layout_centerInParent="true"
-        android:src="@mipmap/user"
-        android:layout_width="50dp"
-        android:layout_height="50dp" />
 </RelativeLayout>
