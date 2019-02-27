@@ -3,9 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:background="@color/main_color"
+        android:layout_width="match_parent"
+        android:layout_height="150dp" />
+
     <com.lq.myapp.utils.RoundImageView
+        android:background="@drawable/round_image"
         android:layout_centerHorizontal="true"
-        android:src="@mipmap/login_avatar"
         android:scaleType="fitXY"
         android:id="@+id/iv_user"
         android:layout_width="80dp"
@@ -19,11 +24,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <Button
+    <!--<Button
         android:id="@+id/log_out"
         android:text="退出登录"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content" />-->
 
 </RelativeLayout>

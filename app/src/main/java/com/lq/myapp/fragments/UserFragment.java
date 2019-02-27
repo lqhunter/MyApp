@@ -1,17 +1,19 @@
 package com.lq.myapp.fragments;
 
 import android.support.annotation.Nullable;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.lq.myapp.CustomAuthListener;
+import com.lq.myapp.activities.CustomAuthListener;
 import com.lq.myapp.R;
 import com.lq.myapp.base.BaseFragment;
 import com.lq.myapp.utils.LogUtil;
+import com.lq.myapp.utils.RoundImageView;
 import com.squareup.picasso.Picasso;
 import com.ximalaya.ting.android.opensdk.auth.handler.XmlySsoHandler;
 import com.ximalaya.ting.android.opensdk.auth.model.XmlyAuth2AccessToken;
@@ -57,7 +59,8 @@ public class UserFragment extends BaseFragment {
 
     private View mRootView;
     private TextView mUser_name;
-    private ImageView mUser_pic;
+    private RoundImageView mUser_pic;
+    private boolean isLogin = false;
 
 
     @Override
@@ -76,6 +79,9 @@ public class UserFragment extends BaseFragment {
             CommonRequest.getBaseUserInfo(map, new IDataCallBack<XmBaseUserInfo>() {
                 @Override
                 public void onSuccess(@Nullable XmBaseUserInfo xmBaseUserInfo) {
+
+                    //登录成功
+                    isLogin = true;
                     mUser_name.setText(xmBaseUserInfo.getNickName());
                     Picasso.with(getContext()).load(xmBaseUserInfo.getAvatarUrl()).into(mUser_pic);
                 }
@@ -83,13 +89,18 @@ public class UserFragment extends BaseFragment {
                 @Override
                 public void onError(int i, String s) {
                     LogUtil.e(TAG, "初始化数据错误id。。。" + i);
-
+                    mUser_name.setText("点击头像登录");
+                    mUser_pic.setBackground(getResources().getDrawable(R.mipmap.login_avatar));
                 }
             });
+        } else {
+            mUser_name.setText("点击头像登录");
+            mUser_pic.setBackground(getResources().getDrawable(R.mipmap.login_avatar));
         }
     }
 
     private void initView() {
+
         mUser_name = mRootView.findViewById(R.id.tv_user_name);
         mUser_pic = mRootView.findViewById(R.id.iv_user);
         mUser_pic.setOnClickListener(new View.OnClickListener() {
@@ -104,6 +115,8 @@ public class UserFragment extends BaseFragment {
                             CommonRequest.getBaseUserInfo(map, new IDataCallBack<XmBaseUserInfo>() {
                                 @Override
                                 public void onSuccess(@Nullable XmBaseUserInfo xmBaseUserInfo) {
+                                    //登录成功
+                                    isLogin = true;
                                     mUser_name.setText(xmBaseUserInfo.getNickName());
                                     Picasso.with(getContext()).load(xmBaseUserInfo.getAvatarUrl()).into(mUser_pic);
                                 }
@@ -116,33 +129,11 @@ public class UserFragment extends BaseFragment {
                             });
                         }
                     });
+                } else {
+                    //TODO 显示dialog
+                    showPopWindow();
                 }
 
-            }
-        });
-
-        Button logOut = mRootView.findViewById(R.id.log_out);
-        logOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AccessTokenManager.getInstanse().loginOut(new ILoginOutCallBack() {
-                    @Override
-                    public void onSuccess() {
-                        if (mAccessToken != null && mAccessToken.isSessionValid()) {
-                            AccessTokenKeeper.clear(getContext());
-                            mAccessToken = new XmlyAuth2AccessToken();
-                        }
-                        //退出后权限认证失败，此时会102错误
-                        LogUtil.d(TAG, "退出登录成功...");
-                        //TODO:重置用户头像等
-                    }
-
-                    @Override
-                    public void onFail(int i, String s) {
-                        LogUtil.e(TAG, "错误id。。。" + i);
-
-                    }
-                });
             }
         });
     }
@@ -155,5 +146,69 @@ public class UserFragment extends BaseFragment {
             e.printStackTrace();
         }
         mSsoHandler = new XmlySsoHandler(getActivity(), mAuthInfo);
+    }
+
+    private void showPopWindow() {
+        View parent = ((ViewGroup) getActivity().findViewById(android.R.id.content)).getChildAt(0);
+        View popView = View.inflate(getContext(), R.layout.user_popup_window, null);
+
+        TextView changeUser = popView.findViewById(R.id.user_change);
+        TextView logOut = popView.findViewById(R.id.user_log_out);
+        TextView cancel = popView.findViewById(R.id.cancle);
+        ImageView bgShadow = popView.findViewById(R.id.bg_shadow);
+
+        int width = getResources().getDisplayMetrics().widthPixels;
+        int height = getResources().getDisplayMetrics().heightPixels;
+
+        final PopupWindow popWindow = new PopupWindow(popView,width,height);
+        popWindow.setAnimationStyle(R.style.PopupAnimation);
+        popWindow.setFocusable(true);
+        popWindow.setOutsideTouchable(false);// 设置同意在外点击消失
+        popWindow.setClippingEnabled(false);//覆盖状态栏
+
+        View.OnClickListener listener = new View.OnClickListener() {
+            public void onClick(View v) {
+                LogUtil.d(TAG, v.getId() + "");
+                switch (v.getId()) {
+                    case R.id.user_change:
+
+                        break;
+                    case R.id.user_log_out:
+                        AccessTokenManager.getInstanse().loginOut(new ILoginOutCallBack() {
+                            @Override
+                            public void onSuccess() {
+                                if (mAccessToken != null && mAccessToken.isSessionValid()) {
+                                    AccessTokenKeeper.clear(getContext());
+                                    mAccessToken = new XmlyAuth2AccessToken();
+                                }
+                                //退出后权限认证失败，此时会102错误
+                                LogUtil.d(TAG, "退出登录成功...");
+                                //TODO:重置用户头像等
+                                isLogin = false;
+                                getActivity().recreate();
+                            }
+
+                            @Override
+                            public void onFail(int i, String s) {
+                                LogUtil.e(TAG, "错误id。。。" + i);
+
+                            }
+                        });
+                        break;
+                    case R.id.cancle:
+                        break;
+                    case R.id.bg_shadow:
+                        break;
+                }
+                popWindow.dismiss();
+            }
+        };
+
+        changeUser.setOnClickListener(listener);
+        logOut.setOnClickListener(listener);
+        cancel.setOnClickListener(listener);
+        bgShadow.setOnClickListener(listener);
+
+        popWindow.showAtLocation(parent, Gravity.NO_GRAVITY, 0, 0);
     }
 }

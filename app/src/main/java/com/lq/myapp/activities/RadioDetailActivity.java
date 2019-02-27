@@ -1,9 +1,6 @@
-package com.lq.myapp;
+package com.lq.myapp.activities;
 
 import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,6 +12,7 @@ import android.widget.TextView;
 import com.jimi_wu.ptlrecyclerview.AutoLoad.AutoLoadRecyclerView;
 import com.jimi_wu.ptlrecyclerview.LayoutManager.PTLGridLayoutManager;
 import com.jimi_wu.ptlrecyclerview.PullToLoad.OnLoadListener;
+import com.lq.myapp.R;
 import com.lq.myapp.adapters.RadioDetailListViewAdapter;
 import com.lq.myapp.base.BaseActivity;
 import com.lq.myapp.interfaces.IDetailViewCallback;
@@ -32,7 +30,6 @@ import com.ximalaya.ting.android.opensdk.player.appnotification.XmNotificationCr
 import com.ximalaya.ting.android.opensdk.player.service.IXmPlayerStatusListener;
 import com.ximalaya.ting.android.opensdk.player.service.XmPlayerException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RadioDetailActivity extends BaseActivity implements IDetailViewCallback, IXmPlayerStatusListener {

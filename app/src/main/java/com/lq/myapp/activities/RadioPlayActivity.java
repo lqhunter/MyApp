@@ -1,4 +1,4 @@
-package com.lq.myapp;
+package com.lq.myapp.activities;
 
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -12,6 +12,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.lq.myapp.R;
 import com.lq.myapp.presenters.RadioDetailPresenter;
 import com.lq.myapp.utils.BlurTransformation;
 import com.lq.myapp.utils.CurrentPlayerManager;

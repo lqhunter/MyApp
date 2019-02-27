@@ -2,16 +2,29 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
 
-    <com.jimi_wu.ptlrecyclerview.PullToLoad.PullToLoadRecyclerView
 
+
+    <com.jimi_wu.ptlrecyclerview.PullToLoad.PullToLoadRecyclerView
+        android:layout_below="@+id/video_tool_bar"
         android:id="@+id/recyclerview_science"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
     </com.jimi_wu.ptlrecyclerview.PullToLoad.PullToLoadRecyclerView>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/video_tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/main_color"
+        app:contentInsetStart="0dp"
+        app:titleTextAppearance="@style/Toolbar.TitleText">
+
+    </android.support.v7.widget.Toolbar>
 
 
 </RelativeLayout>

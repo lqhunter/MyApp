@@ -48,7 +48,7 @@ public class RoundImageView extends AppCompatImageView {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         mWidth = getMeasuredWidth();
         mHight = getMeasuredHeight();
-        mRadius = Math.min(mWidth, mHight) / 2;
+        mRadius = (Math.min(mWidth, mHight) / 2) - 5;
     }
 
     @Override

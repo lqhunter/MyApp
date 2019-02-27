@@ -1,4 +1,4 @@
-package com.lq.myapp;
+package com.lq.myapp.activities;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.lq.myapp.R;
 import com.lq.myapp.adapters.WallpaperViewPagerAdapter;
 import com.lq.myapp.views.PhotoViewPager;
 

@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.jimi_wu.ptlrecyclerview.AutoLoad.AutoLoadRecyclerView;
 import com.jimi_wu.ptlrecyclerview.LayoutManager.PTLGridLayoutManager;
 import com.jimi_wu.ptlrecyclerview.PullToLoad.OnLoadListener;
-import com.lq.myapp.PhotoViewActivity;
+import com.lq.myapp.activities.PhotoViewActivity;
 import com.lq.myapp.R;
 import com.lq.myapp.adapters.PicWallpaperListAdapter;
 import com.lq.myapp.base.BaseFragment;
@@ -19,7 +19,6 @@ import com.lq.myapp.presenters.PicWallpaperPresenter;
 import com.lq.myapp.utils.LogUtil;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 

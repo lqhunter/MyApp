@@ -4,6 +4,12 @@
     android:layout_height="match_parent">
 
 
+    <com.jimi_wu.ptlrecyclerview.AutoLoad.AutoLoadRecyclerView
+        android:id="@+id/subscribe_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </com.jimi_wu.ptlrecyclerview.AutoLoad.AutoLoadRecyclerView>
 
     <ImageView
         android:id="@+id/not_login_image"
@@ -23,10 +29,5 @@
 
 
 
-    <com.jimi_wu.ptlrecyclerview.AutoLoad.AutoLoadRecyclerView
-        android:id="@+id/subscribe_list_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-    </com.jimi_wu.ptlrecyclerview.AutoLoad.AutoLoadRecyclerView>
 </RelativeLayout>

@@ -1,4 +1,4 @@
-package com.lq.myapp;
+package com.lq.myapp.activities;
 
 import android.os.Bundle;
 

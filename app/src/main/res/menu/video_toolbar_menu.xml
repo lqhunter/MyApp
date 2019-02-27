@@ -7,17 +7,7 @@
         android:id="@+id/search"
         android:title="搜索"
         app:showAsAction="always" />
-    <item
-        android:id="@+id/tool_bar_download"
-        android:icon="@mipmap/download_bar"
-        android:title="下载"
-        app:showAsAction="always" />
 
-    <item
-        android:id="@+id/setting"
-        android:icon="@mipmap/setting_bar"
-        android:title="下载"
-        app:showAsAction="always" />
 
 
 </menu>

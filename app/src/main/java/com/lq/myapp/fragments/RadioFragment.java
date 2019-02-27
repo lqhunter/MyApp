@@ -2,7 +2,11 @@ package com.lq.myapp.fragments;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -24,6 +28,7 @@ public class RadioFragment extends BaseFragment {
     IndicatorAdapter mIndicatorAdapter;
     MainContentAdapter mainContentAdapter;
     private View mRootView;
+    private Toolbar mToolbar;
 
     @Override
     protected View onSubViewLoaded(LayoutInflater layoutInflater, ViewGroup container) {
@@ -46,6 +51,10 @@ public class RadioFragment extends BaseFragment {
     }
 
     private void initView() {
+        mToolbar = mRootView.findViewById(R.id.radio_tool_bar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+        setHasOptionsMenu(true);
+
         mViewPager = mRootView.findViewById(R.id.content_pager);
         //创建内容适配器
         FragmentManager supportFragmentManager = getChildFragmentManager();
@@ -67,5 +76,11 @@ public class RadioFragment extends BaseFragment {
         //把 indicater 和 ViewPager 绑定
         ViewPagerHelper.bind(magicIndicator, mViewPager);
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.radio_toolbar_menu, menu);
     }
 }

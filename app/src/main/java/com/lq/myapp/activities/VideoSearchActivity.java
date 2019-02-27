@@ -1,4 +1,4 @@
-package com.lq.myapp;
+package com.lq.myapp.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.lq.myapp.R;
 import com.lq.myapp.adapters.SearchDataListAdapter;
 import com.lq.myapp.bean.VideoBean;
 import com.lq.myapp.interfaces.IVideoSearchViewCallBack;

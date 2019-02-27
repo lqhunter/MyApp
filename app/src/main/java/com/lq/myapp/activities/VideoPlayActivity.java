@@ -1,4 +1,4 @@
-package com.lq.myapp;
+package com.lq.myapp.activities;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,8 +10,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.lq.myapp.R;
 import com.lq.myapp.adapters.VideoDetailListAdapter;
 import com.lq.myapp.base.BaseApplication;
 import com.lq.myapp.bean.VideoBean;
@@ -34,6 +36,7 @@ public class VideoPlayActivity extends AppCompatActivity implements VideoDetailP
     private ImageView mVideoPlayerCover;
     private TextView mVideoName;
     private TextView mVideoCount;
+    private RelativeLayout mCoverBg;
 
 
     @Override
@@ -56,6 +59,8 @@ public class VideoPlayActivity extends AppCompatActivity implements VideoDetailP
     }
 
     private void initView() {
+        mCoverBg = findViewById(R.id.cover_bg);
+
         mJzvdStd = findViewById(R.id.video_player);
         //mJzvdStd.thumbImageView.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.cover));
         mJzvdStd.setVisibility(View.GONE);//初始化时不让其显示
@@ -93,7 +98,8 @@ public class VideoPlayActivity extends AppCompatActivity implements VideoDetailP
                 @Override
                 public void run() {
                     mJzvdStd.setUp(videoURL, JZVideoPlayer.SCREEN_WINDOW_NORMAL, "第" + num + "集");
-                    mVideoPlayerCover.setVisibility(View.GONE);
+                    //mVideoPlayerCover.setVisibility(View.GONE);
+                    mCoverBg.setVisibility(View.GONE);
                     mJzvdStd.setVisibility(View.VISIBLE);
                     mJzvdStd.startVideo();
                 }

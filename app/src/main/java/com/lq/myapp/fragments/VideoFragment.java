@@ -12,7 +12,7 @@ import com.jimi_wu.ptlrecyclerview.LayoutManager.PTLGridLayoutManager;
 import com.jimi_wu.ptlrecyclerview.PullToLoad.OnLoadListener;
 import com.jimi_wu.ptlrecyclerview.PullToLoad.PullToLoadRecyclerView;
 import com.lq.myapp.R;
-import com.lq.myapp.VideoPlayActivity;
+import com.lq.myapp.activities.VideoPlayActivity;
 import com.lq.myapp.adapters.VideoListAdapter;
 import com.lq.myapp.base.BaseApplication;
 import com.lq.myapp.base.BaseFragment;

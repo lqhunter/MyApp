@@ -2,10 +2,6 @@ package com.lq.myapp.fragments;
 
 import android.content.Intent;
 import android.graphics.Rect;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,9 +10,8 @@ import android.view.ViewGroup;
 
 import com.jimi_wu.ptlrecyclerview.AutoLoad.AutoLoadRecyclerView;
 import com.jimi_wu.ptlrecyclerview.LayoutManager.PTLGridLayoutManager;
-import com.jimi_wu.ptlrecyclerview.LayoutManager.PTLLinearLayoutManager;
 import com.jimi_wu.ptlrecyclerview.PullToLoad.OnLoadListener;
-import com.lq.myapp.RadioDetailActivity;
+import com.lq.myapp.activities.RadioDetailActivity;
 import com.lq.myapp.R;
 import com.lq.myapp.adapters.RadioRecommendListAdapter;
 import com.lq.myapp.base.BaseFragment;

@@ -1,7 +1,11 @@
 package com.lq.myapp.fragments;
 
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -22,6 +26,7 @@ public class PicFragment extends BaseFragment {
     private View mRootView;
     private ViewPager mViewPager;
     private IndicatorAdapter mIndicatorAdapter;
+    private Toolbar mToolbar;
 
     @Override
     protected View onSubViewLoaded(LayoutInflater layoutInflater, ViewGroup container) {
@@ -44,6 +49,10 @@ public class PicFragment extends BaseFragment {
     }
 
     private void initView() {
+        mToolbar = mRootView.findViewById(R.id.pic_tool_bar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+        setHasOptionsMenu(false);
+
         //1.初始化 viewPager
         mViewPager = mRootView.findViewById(R.id.pic_content_pager);
         //创建内容适配器
@@ -69,4 +78,5 @@ public class PicFragment extends BaseFragment {
 
 
     }
+
 }
