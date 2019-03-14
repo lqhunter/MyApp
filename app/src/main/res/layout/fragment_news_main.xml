@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/news_tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/main_color"
+        app:contentInsetStart="0dp"
+        app:titleTextAppearance="@style/Toolbar.TitleText">
+
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:background="@color/main_color"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+
+        <net.lucode.hackware.magicindicator.MagicIndicator
+            android:id="@+id/pic_magic_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+
+    </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pic_content_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v4.view.ViewPager>
+
+</LinearLayout>

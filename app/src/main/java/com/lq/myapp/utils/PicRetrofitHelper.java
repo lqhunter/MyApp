@@ -11,6 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * 得到 IPicService接口 的实现类, 可以建立不同的接口在此取得 mMzituRetrofit 创建的实现类
  */
 public class PicRetrofitHelper {
+
     private static PicRetrofitHelper sInstance = null;
     private static Retrofit mMzituRetrofit;
     private static Retrofit mWallpaperRetrofit;

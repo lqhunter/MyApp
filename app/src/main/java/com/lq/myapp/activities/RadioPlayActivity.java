@@ -25,6 +25,7 @@ import com.ximalaya.ting.android.opensdk.player.XmPlayerManager;
 import com.ximalaya.ting.android.opensdk.player.service.IXmPlayerStatusListener;
 import com.ximalaya.ting.android.opensdk.player.service.XmPlayListControl;
 import com.ximalaya.ting.android.opensdk.player.service.XmPlayerException;
+import com.ximalaya.ting.android.sdkdownloader.XmDownloadManager;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -48,6 +49,7 @@ public class RadioPlayActivity extends AppCompatActivity implements IXmPlayerSta
     private boolean isTouchSeekBar = false;
     private int touchProgress;
     private CurrentPlayerManager mCurrentPlayerManager;
+    private Button mDownload;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -185,6 +187,13 @@ public class RadioPlayActivity extends AppCompatActivity implements IXmPlayerSta
         mCurrentStatus = findViewById(R.id.current_status);
         mTotal = findViewById(R.id.total);
 
+        mDownload = findViewById(R.id.download);
+        mDownload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
     }
 

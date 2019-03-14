@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import com.jimi_wu.ptlrecyclerview.AutoLoad.AutoLoadRecyclerView;
 import com.jimi_wu.ptlrecyclerview.LayoutManager.PTLGridLayoutManager;
 import com.jimi_wu.ptlrecyclerview.PullToLoad.OnLoadListener;
 import com.lq.myapp.R;
+import com.lq.myapp.adapters.MyAutoLoadRecyclerView;
 import com.lq.myapp.adapters.RadioDetailListViewAdapter;
 import com.lq.myapp.base.BaseActivity;
 import com.lq.myapp.interfaces.IDetailViewCallback;
@@ -202,7 +204,6 @@ public class RadioDetailActivity extends BaseActivity implements IDetailViewCall
             mPlayOrPause.setImageResource(R.mipmap.pausecircleo);
             mTvPlayStatus.setText("停止播放");
         }
-
     }
 
     @Override
@@ -228,6 +229,14 @@ public class RadioDetailActivity extends BaseActivity implements IDetailViewCall
 
     @Override
     public void onSoundSwitch(PlayableModel playableModel, PlayableModel playableModel1) {
+        if (playableModel != null) {
+            LogUtil.d(TAG, "之前id-->" + playableModel.getDataId());
+
+        }
+        if (playableModel1 != null) {
+            LogUtil.d(TAG, "之后id-->" + playableModel1.getDataId());
+        }
+
         mListViewAdapter.setSelectedIndex(mXmPlayerManager.getCurrentIndex());
         mRlv.completeRefresh();//这个refresh会刷新所有可见的item
     }

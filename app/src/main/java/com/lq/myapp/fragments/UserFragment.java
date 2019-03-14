@@ -1,5 +1,7 @@
 package com.lq.myapp.fragments;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -211,4 +213,5 @@ public class UserFragment extends BaseFragment {
 
         popWindow.showAtLocation(parent, Gravity.NO_GRAVITY, 0, 0);
     }
+
 }
